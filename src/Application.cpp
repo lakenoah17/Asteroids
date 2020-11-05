@@ -1,5 +1,63 @@
-#include <iostream>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
-int main() {
-	std::cout << "Hi" << std::endl;
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+#include "graphics/Renderer.h"
+
+int main(void)
+{
+    GLFWwindow* window;
+
+    /* Initialize the library */
+    if (!glfwInit())
+        return -1;
+
+
+    /* Create a windowed mode window and its OpenGL context */
+    window = glfwCreateWindow(640, 480, "Learning OpenGL", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        return -1;
+    }
+
+    /* Make the window's context current */
+    glfwMakeContextCurrent(window);
+
+    //Sets framerate to Vsync
+    glfwSwapInterval(1);
+
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Error" << std::endl;
+    }
+
+    std::cout << glGetString(GL_VERSION) << std::endl;
+
+    //Scopes the draw call so there is no infinite loop from the index 
+    //buffer not being destroyed before glfw is terminated causing the 
+    //error checker to loop infinetly because it doesn't have a valid context
+    {
+
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        GLCall(glEnable(GL_BLEND));
+
+
+        Renderer renderer;
+
+        while (!glfwWindowShouldClose(window))
+        {
+            renderer.Clear();
+
+            GLCall(glfwSwapBuffers(window));
+
+            GLCall(glfwPollEvents());
+        }
+    }
+
+    glfwTerminate();
+    return 0;
 }
