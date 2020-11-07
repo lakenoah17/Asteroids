@@ -60,8 +60,10 @@ int main(void)
         };
 
         unsigned int spaceShipIndicies[] = {
-            0, 1, 2,
-            2, 3, 0
+            0, 1, 
+            1, 2, 
+            2, 3,
+            3, 0
         };
 
         Shader *spaceshipShader = new Shader("res/shaders/Spaceship.shader");
@@ -74,7 +76,7 @@ int main(void)
         spaceshipShader->SetUniformMat4f("u_MVP", mvp);
         spaceshipShader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-        VertexBuffer *vb = new VertexBuffer(spaceshipVertPos, 4 * 34 * sizeof(float));
+        VertexBuffer *vb = new VertexBuffer(spaceshipVertPos, 4 * 4 * sizeof(float));
 
         VertexArray *vao = new VertexArray();
 
@@ -84,7 +86,7 @@ int main(void)
 
         vao->AddBuffer(*vb, layout);
 
-        IndexBuffer ib(spaceShipIndicies, 6);
+        IndexBuffer ib(spaceShipIndicies, 2 * 4);
 
         spaceshipShader->Bind();
 
@@ -93,7 +95,7 @@ int main(void)
         {
             renderer.Clear();
 
-            renderer.Draw(*vao, ib, *spaceshipShader);
+            renderer.Draw(*vao, ib, *spaceshipShader, GL_LINES);
 
             GLCall(glfwSwapBuffers(window));
 
