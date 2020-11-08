@@ -13,6 +13,11 @@ public:
 
 	bool CheckForCollision(Collider& otherCollider);
 
+
+	/////////////////////////////////////////////////////////
+	//All of these functions are for encapsulation purposes//
+	/////////////////////////////////////////////////////////
+
 	float GetXPos() { return rect[0]; }
 	float SetXPos(float value) { rect[0] = value; }
 

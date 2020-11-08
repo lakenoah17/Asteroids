@@ -14,7 +14,10 @@
 
 #include "game_logic/GameObject.h"
 
-int main(void)
+void Draw();
+void Update();
+
+int main()
 {
     GLFWwindow* window;
 
@@ -65,4 +68,12 @@ int main(void)
 
     glfwTerminate();
     return 0;
+}
+
+void Draw() {
+
+}
+
+void Update() {
+
 }

@@ -6,6 +6,7 @@ class GameObject
 {
 private:
 	Collider* collider;
+
 	//Position is at the center of the rectangle
 	glm::vec2*  position;
 	Renderer* renderer;
