@@ -4,10 +4,10 @@
 #include "Shader.h"
 #include "VertexArray.h"
 #include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 #define ASSERT(x) if (!(x)) __debugbreak();
+
 #define GLCall(x) GLClearError();\
     x;\
     ASSERT(GLLogCall(#x, __FILE__, __LINE__))
@@ -29,7 +29,7 @@ private:
 
 
 public:
-    Renderer(std::string shaderPath, float *verticies, unsigned int *indicies);
+    Renderer(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int* indicies, unsigned int indiciesLen);
     void Clear() const;
     void Draw() const;
     void Draw(unsigned int drawType) const;

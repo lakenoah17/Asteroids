@@ -8,9 +8,9 @@ GameObject::GameObject()
 	verticies = new float[16]
 	{
 		0.0f, 0.0f, 0.0f, 0.0f,
-		5.0f, 0.0f, 1.0f, 0.0f,
-		5.0f, 5.0f, 1.0f, 1.0f,
-		0.0f, 5.0f, 0.0f, 1.0f
+		50.0f, 0.0f, 1.0f, 0.0f,
+		50.0f, 50.0f, 1.0f, 1.0f,
+		0.0f, 50.0f, 0.0f, 1.0f
 	};
 
 	indicies = new unsigned int[6]{
@@ -18,7 +18,7 @@ GameObject::GameObject()
 		0, 3, 2
 	};
 	
-	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
+	renderer = new Renderer("res/shaders/Spaceship.shader", verticies, 16, indicies, 6);
 }
 
 GameObject::GameObject(Collider* collider)
@@ -39,7 +39,7 @@ GameObject::GameObject(Collider* collider)
 		0, 3, 2
 	};
 
-	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
+	renderer = new Renderer("res/shaders/Spaceship.shader", verticies, 16, indicies, 6);
 }
 
 GameObject::GameObject(float x, float y, float width, float height)
@@ -60,7 +60,7 @@ GameObject::GameObject(float x, float y, float width, float height)
 		0, 3, 2
 	};
 
-	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
+	renderer = new Renderer("res/shaders/Spaceship.shader", verticies, 16, indicies, 6);
 }
 
 GameObject::~GameObject()

@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "VertexBufferLayout.h"
 #include <iostream>
 
 void GLClearError() {
@@ -13,20 +14,16 @@ bool GLLogCall(const char* function, const char* file, int line) {
     return true;
 }
 
-Renderer::Renderer(std::string shaderPath, float verticies[], unsigned int indicies[]) {
+Renderer::Renderer(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int* indicies, unsigned int indiciesLen) {
     
-    shader = new Shader(shaderPath);
+    shader = new Shader((const std::string&)shaderPath);
 
     proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
     view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
     model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
     mvp = &(proj * view * model);
 
-    shader->Bind();
-    shader->SetUniformMat4f("u_MVP", *mvp);
-    shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-    vb = new VertexBuffer(verticies, sizeof(verticies) / sizeof(float));
+    vb = new VertexBuffer(verticies, verticiesLen * sizeof(float));
 
     vao = new VertexArray();
 
@@ -37,10 +34,12 @@ Renderer::Renderer(std::string shaderPath, float verticies[], unsigned int indic
     layout.Push<float>(2);
 
     vao->AddBuffer(*vb, layout);
-
-    IndexBuffer ib(indicies, sizeof(indicies) / sizeof(unsigned int));
+    
+    ib = new IndexBuffer(indicies, indiciesLen);
 
     shader->Bind();
+    shader->SetUniformMat4f("u_MVP", *mvp);
+    shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void Renderer::Clear() const
