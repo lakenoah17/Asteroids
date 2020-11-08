@@ -51,6 +51,16 @@ int main()
     //error checker to loop infinetly because it doesn't have a valid context
     {
 
+        //TODO: Code for later to use for mvp matricies
+
+        //Sets up all of the matrices for a Model View Projection Matrix hardcoded atm
+        //proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+        //view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+        //model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+        //mvp = &(proj * view * model);
+
+
+
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
