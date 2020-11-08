@@ -13,10 +13,12 @@ GameObject::GameObject()
 		0.0f, 5.0f, 0.0f, 1.0f
 	};
 
-	indicies = new int[6]{
+	indicies = new unsigned int[6]{
 		2, 1, 0,
 		0, 3, 2
 	};
+	
+	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
 }
 
 GameObject::GameObject(Collider* collider)
@@ -32,10 +34,12 @@ GameObject::GameObject(Collider* collider)
 		collider->GetXPos(),					    collider->GetYPos() + collider->GetHeight(), 1.0f, 0.0f
 	};
 
-	indicies = new int[6]{
+	indicies = new unsigned int[6]{
 		2, 1, 0,
 		0, 3, 2
 	};
+
+	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
 }
 
 GameObject::GameObject(float x, float y, float width, float height)
@@ -51,10 +55,12 @@ GameObject::GameObject(float x, float y, float width, float height)
 		x,         y + height, 1.0f, 0.0f
 	};
 
-	indicies = new int[6]{
+	indicies = new unsigned int[6]{
 		2, 1, 0,
 		0, 3, 2
 	};
+
+	renderer = new Renderer("../../res/shaders/Spaceship.shader", verticies, indicies);
 }
 
 GameObject::~GameObject()
@@ -67,4 +73,6 @@ GameObject::~GameObject()
 
 void GameObject::Draw()
 {
+	renderer->Clear();
+	renderer->Draw();
 }

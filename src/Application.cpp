@@ -12,6 +12,8 @@
 #include "graphics/Renderer.h"
 #include "graphics/VertexBufferLayout.h"
 
+#include "game_logic/GameObject.h"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -49,53 +51,11 @@ int main(void)
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
-
-        Renderer renderer;
-
-        float spaceshipVertPos[] = {
-             0.0f,  100.0f, 0.0f, 0.0f,
-           -75.0f, -100.0f, 1.0f, 0.0f,
-             0.0f,  -50.0f, 1.0f, 1.0f,
-            75.0f, -100.0f, 0.0f, 1.0f
-        };
-
-        unsigned int spaceShipIndicies[] = {
-            0, 1, 
-            1, 2, 
-            2, 3,
-            3, 0
-        };
-
-        Shader *spaceshipShader = new Shader("res/shaders/Spaceship.shader");
-
-        glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-        glm::mat4 mvp = proj * view * model;
-        spaceshipShader->Bind();
-        spaceshipShader->SetUniformMat4f("u_MVP", mvp);
-        spaceshipShader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-        VertexBuffer *vb = new VertexBuffer(spaceshipVertPos, 4 * 4 * sizeof(float));
-
-        VertexArray *vao = new VertexArray();
-
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-
-        vao->AddBuffer(*vb, layout);
-
-        IndexBuffer ib(spaceShipIndicies, 2 * 4);
-
-        spaceshipShader->Bind();
-
+        GameObject temp;
 
         while (!glfwWindowShouldClose(window))
         {
-            renderer.Clear();
-
-            renderer.Draw(*vao, ib, *spaceshipShader, GL_LINES);
+            temp.Draw();
 
             GLCall(glfwSwapBuffers(window));
 

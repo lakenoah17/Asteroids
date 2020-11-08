@@ -13,21 +13,51 @@ bool GLLogCall(const char* function, const char* file, int line) {
     return true;
 }
 
+Renderer::Renderer(std::string shaderPath, float verticies[], unsigned int indicies[]) {
+    
+    shader = new Shader(shaderPath);
+
+    proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+    view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+    model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
+    mvp = &(proj * view * model);
+
+    shader->Bind();
+    shader->SetUniformMat4f("u_MVP", *mvp);
+    shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+    vb = new VertexBuffer(verticies, sizeof(verticies) / sizeof(float));
+
+    vao = new VertexArray();
+
+    VertexBufferLayout layout;
+
+    //Need to make this dynamic
+    layout.Push<float>(2);
+    layout.Push<float>(2);
+
+    vao->AddBuffer(*vb, layout);
+
+    IndexBuffer ib(indicies, sizeof(indicies) / sizeof(unsigned int));
+
+    shader->Bind();
+}
+
 void Renderer::Clear() const
 {
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, Shader& shader) const {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
-    GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+void Renderer::Draw() const {
+    shader->Bind();
+    vao->Bind();
+    ib->Bind();
+    GLCall(glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, Shader& shader, unsigned int drawType) const {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
-    GLCall(glDrawElements(drawType, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+void Renderer::Draw(unsigned int drawType) const {
+    shader->Bind();
+    vao->Bind();
+    ib->Bind();
+    GLCall(glDrawElements(drawType, ib->GetCount(), GL_UNSIGNED_INT, nullptr));
 }
