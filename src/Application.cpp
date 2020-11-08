@@ -54,11 +54,14 @@ int main()
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
-        GameObject temp;
+        GameObject temp1(200, 200, 200, 200);
+        GameObject temp2(0, 0, 200, 200);
 
         while (!glfwWindowShouldClose(window))
         {
-            temp.Draw();
+            temp1.Draw();
+
+            temp2.Draw();
 
             GLCall(glfwSwapBuffers(window));
 

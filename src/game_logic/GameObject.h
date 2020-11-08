@@ -22,4 +22,8 @@ public:
 	~GameObject();
 
 	void Draw();
+
+	Renderer* GetRenderer() {
+		return renderer;
+	}
 };

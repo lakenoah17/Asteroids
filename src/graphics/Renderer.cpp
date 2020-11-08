@@ -21,7 +21,7 @@ Renderer::Renderer(std::string shaderPath, float* verticies, unsigned int vertic
     //Sets up all of the matrices for a Model View Projection Matrix hardcoded atm
     proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
     view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-    model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
+    model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
     mvp = &(proj * view * model);
 
     vb = new VertexBuffer(verticies, verticiesLen * sizeof(float));
@@ -31,8 +31,8 @@ Renderer::Renderer(std::string shaderPath, float* verticies, unsigned int vertic
     VertexBufferLayout layout;
 
     //Need to make this dynamic
-    layout.Push<float>(strideLen / 2);
-    layout.Push<float>(strideLen / 2);
+    layout.Push<float>(2);
+    layout.Push<float>(2);
 
     vao->AddBuffer(*vb, layout);
     
@@ -49,7 +49,6 @@ Renderer::~Renderer()
     delete vb;
     delete vao;
     delete ib;
-    delete mvp;
 }
 
 void Renderer::Clear() const
@@ -69,4 +68,9 @@ void Renderer::Draw(unsigned int drawType) const {
     vao->Bind();
     ib->Bind();
     GLCall(glDrawElements(drawType, ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::UpdateMVP(glm::mat4 mvp) {
+    shader->Bind();
+    shader->SetUniformMat4f("u_MVP", mvp);
 }

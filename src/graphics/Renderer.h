@@ -34,4 +34,6 @@ public:
     void Clear() const;
     void Draw() const;
     void Draw(unsigned int drawType) const;
+
+    void UpdateMVP(glm::mat4 mvp);
 };
