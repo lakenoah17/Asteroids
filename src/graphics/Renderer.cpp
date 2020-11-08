@@ -31,7 +31,8 @@ Renderer::Renderer(std::string shaderPath, float* verticies, unsigned int vertic
     VertexBufferLayout layout;
 
     //Need to make this dynamic
-    layout.Push<float>(strideLen);
+    layout.Push<float>(strideLen / 2);
+    layout.Push<float>(strideLen / 2);
 
     vao->AddBuffer(*vb, layout);
     
