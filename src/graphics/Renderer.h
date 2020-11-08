@@ -29,7 +29,8 @@ private:
 
 
 public:
-    Renderer(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int* indicies, unsigned int indiciesLen);
+    Renderer(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int strideLen, unsigned int* indicies, unsigned int indiciesLen);
+    ~Renderer();
     void Clear() const;
     void Draw() const;
     void Draw(unsigned int drawType) const;
