@@ -2,6 +2,8 @@
 #include "VertexBufferLayout.h"
 #include <iostream>
 
+VertexArray* Renderer::currVAO;
+
 void GLClearError() {
     while (glGetError() != GL_NO_ERROR);
 }
@@ -14,18 +16,16 @@ bool GLLogCall(const char* function, const char* file, int line) {
     return true;
 }
 
-Renderable* Renderer::CreateRenderable(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int strideLen, unsigned int* indicies, unsigned int indiciesLen, VertexArray* vao)
+Renderable* Renderer::CreateRenderable(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int strideLen, unsigned int* indicies, unsigned int indiciesLen)
 {
     Shader* shader = new Shader((const std::string&)shaderPath);
 
     VertexBuffer* vb = new VertexBuffer(verticies, verticiesLen * sizeof(float));
 
-    if (!vao)
+    if (!Renderer::currVAO)
     {
-        vao = new VertexArray();
+        Renderer::currVAO = new VertexArray();
     }
-
-    currVAO = vao;
 
     VertexBufferLayout layout;
 
@@ -33,7 +33,7 @@ Renderable* Renderer::CreateRenderable(std::string shaderPath, float* verticies,
     layout.Push<float>(2);
     layout.Push<float>(2);
 
-    vao->AddBuffer(*vb, layout);
+    Renderer::currVAO->AddBuffer(*vb, layout);
 
     IndexBuffer* ib = new IndexBuffer(indicies, indiciesLen);
 
@@ -44,7 +44,7 @@ Renderable* Renderer::CreateRenderable(std::string shaderPath, float* verticies,
 
     renderableObj->shader = shader;
     renderableObj->ib = ib;
-    renderableObj->vao = vao;
+    renderableObj->vao = Renderer::currVAO;
     renderableObj->vb = vb;
 
     return renderableObj;

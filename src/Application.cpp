@@ -14,8 +14,6 @@
 
 #include "game_logic/GameObject.h"
 
-Renderer renderer;
-
 void Draw();
 void Update();
 
@@ -55,25 +53,36 @@ int main()
 
         //TODO: Code for later to use for mvp matricies
 
-        //Sets up all of the matrices for a Model View Projection Matrix hardcoded atm
-        //proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-        //view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-        //model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-        //mvp = &(proj * view * model);
+        
 
-
+        Renderer renderer;
 
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
         GameObject temp1(200, 200, 200, 200);
-        GameObject temp2(0, 0, 200, 200);
+        GameObject temp2(0, 0, 400, 400);
 
         while (!glfwWindowShouldClose(window))
         {
-            temp1.Draw();
+            Renderer::currVAO->Bind();
+            //Sets up all of the matrices for a Model View Projection Matrix hardcoded atm
+            glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+            glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+            glm::mat4 mvp = proj * view * model;
 
-            temp2.Draw();
+            temp1.GetDrawData()->BindRenderable();
+            renderer.Draw(mvp, temp1.GetDrawData());
+            temp1.GetDrawData()->UnBindRenderable();
+
+            view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+            model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 100, 0));
+            mvp = proj * view * model;
+
+            temp2.GetDrawData()->BindRenderable();
+            renderer.Draw(mvp, temp2.GetDrawData());
+            temp2.GetDrawData()->UnBindRenderable();
 
             GLCall(glfwSwapBuffers(window));
 

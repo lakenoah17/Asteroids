@@ -22,7 +22,7 @@ GameObject::GameObject()
 		2, 1, 0,
 		0, 3, 2
 	};
-	
+
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 }
 

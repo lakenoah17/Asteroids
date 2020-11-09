@@ -25,19 +25,21 @@ struct Renderable {
     void BindRenderable() {
         shader->Bind();
         vb->Bind();
-        vao->Bind();
         ib->Bind();
+    }
+    void UnBindRenderable() {
+        shader->UnBind();
+        vb->UnBind();
+        ib->UnBind();
     }
 };
 
 class Renderer {
-private:
-    static VertexArray* currVAO;
 public:
+    static VertexArray* currVAO;
     static Renderable* CreateRenderable(std::string shaderPath, float* verticies, 
                                         unsigned int verticiesLen, unsigned int strideLen,
-                                        unsigned int* indicies, unsigned int indiciesLen, 
-                                        VertexArray* vao = nullptr);
+                                        unsigned int* indicies, unsigned int indiciesLen);
 
     static Renderable* CreateRenderable(Shader* shader, VertexBuffer* vb, VertexArray* vao, IndexBuffer* ib);
 
