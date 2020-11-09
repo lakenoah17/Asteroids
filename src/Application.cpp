@@ -60,29 +60,19 @@ int main()
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
-        GameObject temp1(200, 200, 200, 200);
-        GameObject temp2(0, 0, 400, 400);
+        GameObject temp2(100, 100, 50, 100);
+        GameObject temp1(0, 0, 200, 200);
+        
 
         while (!glfwWindowShouldClose(window))
         {
-            Renderer::currVAO->Bind();
-            //Sets up all of the matrices for a Model View Projection Matrix hardcoded atm
-            glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-            glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-            glm::mat4 mvp = proj * view * model;
+            renderer.Clear();
 
             temp1.GetDrawData()->BindRenderable();
-            renderer.Draw(mvp, temp1.GetDrawData());
-            temp1.GetDrawData()->UnBindRenderable();
-
-            view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-            model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 100, 0));
-            mvp = proj * view * model;
+            renderer.Draw(temp1.GetDrawData());
 
             temp2.GetDrawData()->BindRenderable();
-            renderer.Draw(mvp, temp2.GetDrawData());
-            temp2.GetDrawData()->UnBindRenderable();
+            renderer.Draw(temp2.GetDrawData());
 
             GLCall(glfwSwapBuffers(window));
 
