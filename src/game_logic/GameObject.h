@@ -9,7 +9,7 @@ private:
 
 	//Position is at the center of the rectangle
 	glm::vec2*  position;
-	Renderer* renderer;
+	Renderable* renderData;
 	
 	float* verticies;
 	unsigned int* indicies;
@@ -21,9 +21,5 @@ public:
 
 	~GameObject();
 
-	void Draw();
-
-	Renderer* GetRenderer() {
-		return renderer;
-	}
+	Renderable* GetDrawData();
 };

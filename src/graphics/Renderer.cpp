@@ -14,13 +14,18 @@ bool GLLogCall(const char* function, const char* file, int line) {
     return true;
 }
 
-Renderable Renderer::CreateRenderable(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int strideLen, unsigned int* indicies, unsigned int indiciesLen)
+Renderable* Renderer::CreateRenderable(std::string shaderPath, float* verticies, unsigned int verticiesLen, unsigned int strideLen, unsigned int* indicies, unsigned int indiciesLen, VertexArray* vao)
 {
     Shader* shader = new Shader((const std::string&)shaderPath);
 
     VertexBuffer* vb = new VertexBuffer(verticies, verticiesLen * sizeof(float));
 
-    VertexArray* vao = new VertexArray();
+    if (!vao)
+    {
+        vao = new VertexArray();
+    }
+
+    currVAO = vao;
 
     VertexBufferLayout layout;
 
@@ -35,12 +40,19 @@ Renderable Renderer::CreateRenderable(std::string shaderPath, float* verticies, 
     shader->Bind();
     shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-    Renderable renderableObj;
+    Renderable* renderableObj = new Renderable();
 
-    renderableObj.shader = shader;
-    renderableObj.ib = ib;
-    renderableObj.vao = vao;
-    renderableObj.vb = vb;
+    renderableObj->shader = shader;
+    renderableObj->ib = ib;
+    renderableObj->vao = vao;
+    renderableObj->vb = vb;
+
+    return renderableObj;
+}
+
+Renderable* Renderer::CreateRenderable(Shader* shader, VertexBuffer* vb, VertexArray* vao, IndexBuffer* ib)
+{
+    return new Renderable{shader, vb, vao, ib};
 }
 
 void Renderer::Clear() const
@@ -48,18 +60,15 @@ void Renderer::Clear() const
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void Renderer::Draw(glm::mat4 mvp, Renderable objToRender) const {
-    objToRender.shader->Bind();
-    objToRender.shader->SetUniformMat4f("u_MVP", mvp);
-    objToRender.vao->Bind();
-    objToRender.ib->Bind();
-    GLCall(glDrawElements(GL_TRIANGLES, objToRender.ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+void Renderer::Draw(glm::mat4 mvp, Renderable* objToRender) const {
+    objToRender->BindRenderable();
+    objToRender->shader->SetUniformMat4f("u_MVP", mvp);
+
+    GLCall(glDrawElements(GL_TRIANGLES, objToRender->ib->GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void Renderer::Draw(glm::mat4 mvp, Renderable objToRender, unsigned int drawType) const {
-    objToRender.shader->Bind();
-    objToRender.shader->SetUniformMat4f("u_MVP", mvp);
-    objToRender.vao->Bind();
-    objToRender.ib->Bind();
-    GLCall(glDrawElements(drawType, objToRender.ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+void Renderer::Draw(glm::mat4 mvp, Renderable* objToRender, unsigned int drawType) const {
+    objToRender->BindRenderable();
+    objToRender->shader->SetUniformMat4f("u_MVP", mvp);
+    GLCall(glDrawElements(drawType, objToRender->ib->GetCount(), GL_UNSIGNED_INT, nullptr));
 }

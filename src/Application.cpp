@@ -14,6 +14,8 @@
 
 #include "game_logic/GameObject.h"
 
+Renderer renderer;
+
 void Draw();
 void Update();
 

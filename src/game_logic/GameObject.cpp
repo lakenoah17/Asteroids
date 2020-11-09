@@ -23,7 +23,7 @@ GameObject::GameObject()
 		0, 3, 2
 	};
 	
-	renderer = new Renderer("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
+	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 }
 
 /// <summary>
@@ -51,7 +51,7 @@ GameObject::GameObject(Collider* collider)
 		0, 3, 2
 	};
 
-	renderer = new Renderer("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
+	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 }
 
 /// <summary>
@@ -82,7 +82,7 @@ GameObject::GameObject(float x, float y, float width, float height)
 		0, 3, 2
 	};
 
-	renderer = new Renderer("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
+	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 }
 
 /// <summary>
@@ -94,14 +94,13 @@ GameObject::~GameObject()
 	delete position;
 	delete verticies;
 	delete indicies;
-	delete renderer;
+	delete renderData;
 }
 
 /// <summary>
 /// Draws the object to the screen using the created Renderer
 /// </summary>
-void GameObject::Draw()
+Renderable* GameObject::GetDrawData()
 {
-	renderer->Clear();
-	renderer->Draw();
+	return renderData;
 }
