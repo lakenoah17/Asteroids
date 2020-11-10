@@ -4,7 +4,8 @@
 
 class GameObject
 {
-private:
+protected:
+	//Position is at the top left of the container
 	Collider* collider;
 
 	//Position is at the center of the rectangle

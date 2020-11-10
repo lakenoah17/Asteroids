@@ -27,7 +27,7 @@ int main()
 
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Learning OpenGL", NULL, NULL);
+    window = glfwCreateWindow(1080, 760, "Learning OpenGL", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -51,10 +51,6 @@ int main()
     //error checker to loop infinetly because it doesn't have a valid context
     {
 
-        //TODO: Code for later to use for mvp matricies
-
-        
-
         Renderer renderer;
 
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -69,7 +65,7 @@ int main()
             renderer.Clear();
 
             temp1.GetDrawData()->BindRenderable();
-            renderer.Draw(temp1.GetDrawData());
+            renderer.Draw(temp1.GetDrawData(), GL_LINES);
 
             temp2.GetDrawData()->BindRenderable();
             renderer.Draw(temp2.GetDrawData());

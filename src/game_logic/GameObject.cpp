@@ -5,6 +5,7 @@
 /// </summary>
 GameObject::GameObject()
 {
+	//Sets position
 	position = new glm::vec2(5, 5);
 	collider = new Collider(0, 0, 10, 10);
 
@@ -23,8 +24,10 @@ GameObject::GameObject()
 		0, 3, 2
 	};
 
+	//Creates all of the necessary items for rendering the GameObject
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 
+	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
@@ -55,6 +58,10 @@ GameObject::GameObject(Collider* collider)
 	};
 
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
+
+	//Updates the MVP matrix for rendering to match the members of the GameObject
+	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
+	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
 /// <summary>
@@ -87,6 +94,7 @@ GameObject::GameObject(float x, float y, float width, float height)
 
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 6);
 
+	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
