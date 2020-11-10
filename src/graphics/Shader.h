@@ -3,6 +3,9 @@
 #include <unordered_map>
 #include "glm/glm.hpp"
 
+/// <summary>
+/// Struct that stores the source code of the different shader types
+/// </summary>
 struct ShaderProgramSource {
 	std::string VertexSource;
 	std::string FragmentSource;
@@ -12,8 +15,11 @@ struct ShaderProgramSource {
 class Shader
 {
 private:
+	//File path of the shader
 	std::string m_FilePath;
 	unsigned int m_RendererID;
+
+	//A cache that saves time looking for uniforms in shaders
 	mutable std::unordered_map<std::string, int> m_UniformLocationCache;
 
 public:

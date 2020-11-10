@@ -3,6 +3,9 @@
 #include <GL/glew.h>
 #include "Renderer.h"
 
+/// <summary>
+/// Struct allowing for ease of getting size in bytes of elements
+/// </summary>
 struct VertexBufferElement {
 	unsigned int type;
 	unsigned int count;
@@ -27,15 +30,27 @@ private:
 	unsigned int m_Stride;
 
 public:
+	/// <summary>
+	/// Constructs the layout
+	/// </summary>
 	VertexBufferLayout()
 		: m_Stride(0) {}
 
+	/// <summary>
+	/// If the type hasn't been specified it will throw an error
+	/// </summary>
+	/// <typeparam name="T">Generic type to push</typeparam>
+	/// <param name="count">The number of elements of type T to push</param>
 	template<typename T>
 	void Push(unsigned int count)
 	{
 		static_assert(false);
 	}
 
+	/// <summary>
+	/// Pushes floats to the layout
+	/// </summary>
+	/// <param name="count">The number of floats to push</param>
 	template<>
 	void Push<float>(unsigned int count)
 	{
@@ -43,6 +58,10 @@ public:
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
 	}
 
+	/// <summary>
+	/// Pushes unsigned ints to the layout
+	/// </summary>
+	/// <param name="count">The number of uints to push</param>
 	template<>
 	void Push<unsigned int>(unsigned int count)
 	{
@@ -50,6 +69,10 @@ public:
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
 	}
 
+	/// <summary>
+	/// Pushes unsigned chars to the layout
+	/// </summary>
+	/// <param name="count">The number of uchars to push</param>
 	template<>
 	void Push<unsigned char>(unsigned int count)
 	{

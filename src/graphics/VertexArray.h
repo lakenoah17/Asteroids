@@ -2,6 +2,7 @@
 
 #include "VertexBuffer.h"
 
+//Avoids a circular linking problem
 class VertexBufferLayout;
 
 class VertexArray
