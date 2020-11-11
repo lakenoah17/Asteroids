@@ -14,11 +14,17 @@
 
 #include "game_logic/GameObject.h"
 
-void Draw();
-void Update();
+#include <thread>
+
+//-1 = Stop execution
+//0 = Menu state
+//1 = Game state
+//2 = Game Over state
+static int s_GameState = 0;
 
 int main()
 {
+    #pragma region GLFWInit
     GLFWwindow* window;
 
     /* Initialize the library */
@@ -51,23 +57,36 @@ int main()
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     GLCall(glEnable(GL_BLEND));
 
+    #pragma endregion
+
+    std::list<GameObject> gameObjects;
+
     GameObject temp2(100, 100, 50, 100);
     GameObject temp1(0, 0, 200, 200);
-        
 
-    while (!glfwWindowShouldClose(window))
+    gameObjects.push_back(temp1);
+    gameObjects.push_back(temp2);
+
+    while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         renderer.Clear();
 
-        temp1.GetDrawData()->BindRenderable();
-        renderer.Draw(temp1.GetDrawData(), GL_LINES);
+        if (glfwGetKey(window, GLFW_KEY_W))
+        {
+            temp1.Update();
+        }
 
-        temp2.GetDrawData()->BindRenderable();
-        renderer.Draw(temp2.GetDrawData());
+        temp1.GetDrawData()->BindRenderable();
+        renderer.Draw(temp1.GetDrawData());
 
         GLCall(glfwSwapBuffers(window));
 
         GLCall(glfwPollEvents());
+
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE))
+        {
+            s_GameState = -1;
+        }
     }
 
     glfwTerminate();

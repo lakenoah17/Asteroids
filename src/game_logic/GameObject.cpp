@@ -104,11 +104,11 @@ GameObject::GameObject(float x, float y, float width, float height)
 /// </summary>
 GameObject::~GameObject()
 {
-	delete collider;
+	/*delete collider;
 	delete position;
 	delete verticies;
 	delete indicies;
-	delete renderData;
+	delete renderData;*/
 }
 
 /// <summary>
@@ -121,4 +121,9 @@ Renderable* GameObject::GetDrawData()
 
 void GameObject::Update()
 {
+	collider->SetYPos(collider->GetYPos() + 5);
+	position[1] += 5.0f;
+	//Updates the MVP matrix for rendering to match the members of the GameObject
+	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
+	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
