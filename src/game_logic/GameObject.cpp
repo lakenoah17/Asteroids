@@ -104,6 +104,7 @@ GameObject::GameObject(float x, float y, float width, float height)
 /// </summary>
 GameObject::~GameObject()
 {
+	//Not sure if there is a memory leak because Im not explicitly deleting the pointers
 	/*delete collider;
 	delete position;
 	delete verticies;
