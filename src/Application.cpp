@@ -13,6 +13,8 @@
 #include "graphics/VertexBufferLayout.h"
 
 #include "game_logic/GameObject.h"
+#include "game_logic/Controller.h"
+#include "game_logic/Player.h"
 
 #include <thread>
 
@@ -21,6 +23,8 @@
 //1 = Game state
 //2 = Game Over state
 static int s_GameState = 0;
+
+GLFWwindow* Controller::currWindow;
 
 int main()
 {
@@ -59,10 +63,13 @@ int main()
 
     #pragma endregion
 
+    Controller::currWindow = window;
+
     std::list<GameObject> gameObjects;
 
     GameObject temp2(100, 100, 50, 100);
     GameObject temp1(0, 0, 200, 200);
+    Player player;
 
     gameObjects.push_back(temp1);
     gameObjects.push_back(temp2);
@@ -71,13 +78,10 @@ int main()
     {
         renderer.Clear();
 
-        if (glfwGetKey(window, GLFW_KEY_W))
-        {
-            temp1.Update();
-        }
-
-        temp1.GetDrawData()->BindRenderable();
-        renderer.Draw(temp1.GetDrawData());
+        player.Update();
+        player.GetDrawData()->BindRenderable();
+        renderer.Draw(player.GetDrawData(), GL_LINES);
+        
 
         GLCall(glfwSwapBuffers(window));
 

@@ -149,6 +149,7 @@
     <ClCompile Include="src\game_logic\Collider.cpp" />
     <ClCompile Include="src\game_logic\Controller.cpp" />
     <ClCompile Include="src\game_logic\GameObject.cpp" />
+    <ClCompile Include="src\game_logic\Player.cpp" />
     <ClCompile Include="src\graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\Renderer.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />

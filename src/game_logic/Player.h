@@ -9,5 +9,6 @@ private:
 
 public:
 	Player();
-	~Player();
+
+	void Update() override;
 };

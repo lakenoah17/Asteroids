@@ -10,7 +10,7 @@ protected:
 
 	//Position is at the center of the rectangle
 	glm::vec2*  position;
-	//The rotation in degrees of the GameObject
+	//The rotation in radians of the GameObject
 	float rotation = 0.0f;
 
 	Renderable* renderData;
