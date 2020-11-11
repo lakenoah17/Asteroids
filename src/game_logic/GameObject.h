@@ -23,4 +23,6 @@ public:
 	~GameObject();
 
 	Renderable* GetDrawData();
+
+	virtual void Update();
 };

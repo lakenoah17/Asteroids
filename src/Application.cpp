@@ -46,44 +46,30 @@ int main()
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    //Scopes the draw call so there is no infinite loop from the index 
-    //buffer not being destroyed before glfw is terminated causing the 
-    //error checker to loop infinetly because it doesn't have a valid context
-    {
+    Renderer renderer;
 
-        Renderer renderer;
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glEnable(GL_BLEND));
 
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-        GLCall(glEnable(GL_BLEND));
-
-        GameObject temp2(100, 100, 50, 100);
-        GameObject temp1(0, 0, 200, 200);
+    GameObject temp2(100, 100, 50, 100);
+    GameObject temp1(0, 0, 200, 200);
         
 
-        while (!glfwWindowShouldClose(window))
-        {
-            renderer.Clear();
+    while (!glfwWindowShouldClose(window))
+    {
+        renderer.Clear();
 
-            temp1.GetDrawData()->BindRenderable();
-            renderer.Draw(temp1.GetDrawData(), GL_LINES);
+        temp1.GetDrawData()->BindRenderable();
+        renderer.Draw(temp1.GetDrawData(), GL_LINES);
 
-            temp2.GetDrawData()->BindRenderable();
-            renderer.Draw(temp2.GetDrawData());
+        temp2.GetDrawData()->BindRenderable();
+        renderer.Draw(temp2.GetDrawData());
 
-            GLCall(glfwSwapBuffers(window));
+        GLCall(glfwSwapBuffers(window));
 
-            GLCall(glfwPollEvents());
-        }
+        GLCall(glfwPollEvents());
     }
 
     glfwTerminate();
     return 0;
-}
-
-void Draw() {
-
-}
-
-void Update() {
-
 }

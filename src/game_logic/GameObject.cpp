@@ -118,3 +118,7 @@ Renderable* GameObject::GetDrawData()
 {
 	return renderData;
 }
+
+void GameObject::Update()
+{
+}
