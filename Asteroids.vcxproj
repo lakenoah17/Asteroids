@@ -322,6 +322,7 @@
     <ClInclude Include="src\game_logic\Controller.h" />
     <ClInclude Include="src\game_logic\GameObject.h" />
     <ClInclude Include="src\game_logic\Player.h" />
+    <ClInclude Include="src\game_logic\Projectile.h" />
     <ClInclude Include="src\graphics\IndexBuffer.h" />
     <ClInclude Include="src\graphics\Renderer.h" />
     <ClInclude Include="src\graphics\Shader.h" />
