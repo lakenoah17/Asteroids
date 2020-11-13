@@ -22,23 +22,32 @@ void Controller::Update()
 	}
 	else
 	{
-		
-
-		if (velocity.x < 0.06f && velocity.x > -0.06f)
+		if (acceleration.x <= 0.02f && acceleration.x >= -0.02f)
 		{
 			acceleration.x = 0;
-			velocity.x = 0;
 		}
 
-		if(velocity.y < 0.05f && velocity.y > -0.05f)
+		if(acceleration.y <= 0.02f && acceleration.y >= -0.02f)
 		{
 			acceleration.y = 0;
-			velocity.y = 0;
 		}
 
-		if (velocity.y > 0 || velocity.x > 0)
+		if (velocity.y > 0)
 		{
-			acceleration -= .05f;
+			acceleration.y -= .02f;
+		}
+		if (velocity.x > 0)
+		{
+			acceleration.x -= .02f;
+		}
+
+		if (velocity.y < 0)
+		{
+			acceleration.y += .02f;
+		}
+		if (velocity.x < 0)
+		{
+			acceleration.x += .02f;
 		}
 	}
 
