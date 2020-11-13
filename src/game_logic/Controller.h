@@ -22,7 +22,7 @@ private:
 
 	glm::vec3 velocity;
 	glm::vec2 acceleration;
-	const float thrustMagnitude = 0.01f;
+	const float thrustMagnitude = 0.005f;
 
 	void MoveForward();
 	void TurnLeft();

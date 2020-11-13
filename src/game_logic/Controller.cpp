@@ -16,6 +16,16 @@ void Controller::Update()
 	velocity.x += acceleration.x;
 	velocity.y += acceleration.y;
 
+	if (velocity.x > 7.5f || velocity.x < -7.5f)
+	{
+		acceleration.x = 0;
+	}
+
+	if (velocity.y > 7.5f || velocity.y < -7.5f)
+	{
+		acceleration.y = 0;
+	}
+
 	if (glfwGetKey(currWindow, GLFW_KEY_W))
 	{
 		MoveForward();
@@ -51,8 +61,28 @@ void Controller::Update()
 		}
 	}
 
+	
+
 	parentPosition->x += velocity.x;
 	parentPosition->y += velocity.y;
+
+	int screenWidth;
+	int screenHeight;
+	glfwGetWindowSize(currWindow, &screenWidth, &screenHeight);
+
+	if (parentPosition->x < -5) {
+		parentPosition->x = screenWidth + 2.5;
+	}
+	if (parentPosition->x > screenWidth + 5) {
+		parentPosition->x = -2.5;
+	}
+
+	if (parentPosition->y < -5) {
+		parentPosition->y = screenHeight + 2.5;
+	}
+	if (parentPosition->y > screenHeight + 5) {
+		parentPosition->y = -2.5;
+	}
 
 	parentColliderRect->x += velocity.x;
 	parentColliderRect->y += velocity.y;
@@ -80,12 +110,12 @@ void Controller::MoveForward()
 
 void Controller::TurnLeft()
 {
-	*parentRotation += .05f;
+	*parentRotation += .1f;
 }
 
 void Controller::TurnRight()
 {
-	*parentRotation -= .05f;
+	*parentRotation -= .1f;
 }
 
 void Controller::MoveBackward()
