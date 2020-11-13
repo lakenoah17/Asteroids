@@ -18,14 +18,14 @@ private:
 	GameObject* parent;
 	glm::vec2* parentPosition;
 	glm::vec4* parentColliderRect;
-	float& parentRotation;
+	float* parentRotation;
 
 	glm::vec3 velocity;
 	glm::vec2 acceleration;
-	const float thrustMagnitude = 0.5f;
+	const float thrustMagnitude = 0.02f;
 
 	void MoveForward();
-	void MoveLeft();
-	void MoveRight();
+	void TurnLeft();
+	void TurnRight();
 	void MoveBackward();
 };
