@@ -50,12 +50,16 @@ void Controller::Update()
 
 	parentColliderRect->x += velocity.x;
 	parentColliderRect->y += velocity.y;
+
+	parent->GetDrawData()->model = glm::translate(glm::mat4(1.0f), glm::vec3(velocity.x, velocity.y, 0));
+
+	parent->GetDrawData()->model = glm::rotate(parent->GetDrawData()->model, parentRotation, glm::vec3(0, 0, 1));
 }
 
 void Controller::MoveForward()
 {
-	acceleration[0] += thrustMagnitude * cos(parentRotation);
-	acceleration[1] += thrustMagnitude * sin(parentRotation);
+	acceleration[0] += thrustMagnitude * cos(glm::radians(parentRotation));
+	acceleration[1] += thrustMagnitude * sin(glm::radians(parentRotation));
 }
 
 void Controller::MoveLeft()
