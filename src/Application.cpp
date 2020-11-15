@@ -74,6 +74,8 @@ int main()
     gameObjects.push_back(temp1);
     gameObjects.push_back(temp2);
 
+    Projectile proj(10.0f, 10.0f, 10.0f, 10.0f, 45.0f);
+
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         renderer.Clear();
@@ -82,14 +84,9 @@ int main()
         player.GetDrawData()->BindRenderable();
         renderer.Draw(player.GetDrawData(), GL_LINES);
 
-        std::list<Projectile>* projectiles = player.GetProjectiles();
-
-        Projectile currProjectile = *projectiles->begin();
-        for (int i = 0; i < projectiles->size(); i++) {
-            currProjectile.GetDrawData()->BindRenderable();
-            renderer.Draw(currProjectile.GetDrawData());
-            std::advance(currProjectile, 1);
-        }
+        proj.Update();
+        proj.GetDrawData()->BindRenderable();
+        renderer.Draw(proj.GetDrawData());
         
 
         GLCall(glfwSwapBuffers(window));

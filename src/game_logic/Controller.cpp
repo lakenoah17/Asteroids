@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+std::list<Projectile>* Projectile::s_ActiveProjectiles;
+
 Controller::Controller(GameObject* parent, glm::vec2* position, glm::vec4* colliderRect, float& rotation)
 	:parent(parent), parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
 {
@@ -71,17 +73,17 @@ void Controller::Update()
 	glfwGetWindowSize(currWindow, &screenWidth, &screenHeight);
 
 	if (parentPosition->x < -5) {
-		parentPosition->x = screenWidth + 2.5;
+		parentPosition->x = screenWidth + 2.5f;
 	}
 	if (parentPosition->x > screenWidth + 5) {
-		parentPosition->x = -2.5;
+		parentPosition->x = -2.5f;
 	}
 
 	if (parentPosition->y < -5) {
-		parentPosition->y = screenHeight + 2.5;
+		parentPosition->y = screenHeight + 2.5f;
 	}
 	if (parentPosition->y > screenHeight + 5) {
-		parentPosition->y = -2.5;
+		parentPosition->y = -2.5f;
 	}
 
 	parentColliderRect->x += velocity.x;
@@ -130,6 +132,6 @@ void Controller::MoveBackward()
 }
 
 void Controller::FireProjectile() {
-	Projectile* test = new Projectile(parentPosition->x,parentPosition->y, 25, 25, *parentRotation);
-	//(Player::projectiles).push_back(test);
+	Projectile test(parentPosition->x, parentPosition->y, 25, 25, *parentRotation);
+	Projectile::s_ActiveProjectiles->push_back(test);
 }

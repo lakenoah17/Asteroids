@@ -10,11 +10,10 @@ private:
 	static std::list<Projectile>* projectiles;
 
 public:
-	static std::list<Projectile>* projectiles;
 
 	Player();
 
 	void Update() override;
 
-	std::list<Projectile>* GetProjectiles() { return projectiles; }
+	static std::list<Projectile>* GetProjectiles() { return projectiles; }
 };
