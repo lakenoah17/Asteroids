@@ -1,7 +1,9 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Projectile.h"
+#include "Player.h"
 #include "GLFW/glfw3.h"
+
 
 class Controller
 {
@@ -28,4 +30,5 @@ private:
 	void TurnLeft();
 	void TurnRight();
 	void MoveBackward();
+	void FireProjectile();
 };

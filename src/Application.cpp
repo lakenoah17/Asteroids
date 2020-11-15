@@ -81,6 +81,15 @@ int main()
         player.Update();
         player.GetDrawData()->BindRenderable();
         renderer.Draw(player.GetDrawData(), GL_LINES);
+
+        std::list<Projectile>* projectiles = player.GetProjectiles();
+
+        Projectile currProjectile = *projectiles->begin();
+        for (int i = 0; i < projectiles->size(); i++) {
+            currProjectile.GetDrawData()->BindRenderable();
+            renderer.Draw(currProjectile.GetDrawData());
+            std::advance(currProjectile, 1);
+        }
         
 
         GLCall(glfwSwapBuffers(window));

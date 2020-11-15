@@ -98,6 +98,11 @@ void Controller::Update()
 	{
 		TurnRight();
 	}
+
+	if (glfwGetKey(currWindow, GLFW_KEY_SPACE))
+	{
+		FireProjectile();
+	}
 	
 	parent->GetDrawData()->model = glm::rotate(parent->GetDrawData()->model, *parentRotation - glm::half_pi<float>(), glm::vec3(0, 0, 1));
 }
@@ -122,4 +127,9 @@ void Controller::MoveBackward()
 {
 	acceleration[0] -= thrustMagnitude * acceleration[0] * cos(*parentRotation);
 	acceleration[1] -= thrustMagnitude * acceleration[1] * sin(*parentRotation);
+}
+
+void Controller::FireProjectile() {
+	Projectile* test = new Projectile(parentPosition->x,parentPosition->y, 25, 25, *parentRotation);
+	//(Player::projectiles).push_back(test);
 }
