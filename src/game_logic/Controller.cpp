@@ -1,7 +1,5 @@
 #include "Controller.h"
 
-std::list<Projectile>* Projectile::s_ActiveProjectiles;
-
 Controller::Controller(GameObject* parent, glm::vec2* position, glm::vec4* colliderRect, float& rotation)
 	:parent(parent), parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
 {
@@ -132,6 +130,5 @@ void Controller::MoveBackward()
 }
 
 void Controller::FireProjectile() {
-	Projectile test(parentPosition->x, parentPosition->y, 25, 25, *parentRotation);
-	Projectile::s_ActiveProjectiles->push_back(test);
+	Projectile test(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
 }

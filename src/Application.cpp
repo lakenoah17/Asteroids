@@ -64,6 +64,7 @@ int main()
     #pragma endregion
 
     Controller::currWindow = window;
+    Projectile::currWindow = window;
 
     std::list<GameObject> gameObjects;
 
@@ -84,9 +85,15 @@ int main()
         player.GetDrawData()->BindRenderable();
         renderer.Draw(player.GetDrawData(), GL_LINES);
 
-        proj.Update();
-        proj.GetDrawData()->BindRenderable();
-        renderer.Draw(proj.GetDrawData());
+        for (int i = 0; i < 2; i++)
+        {
+            if (Projectile::s_ActiveProjectiles[i] != NULL)
+            {
+                Projectile::s_ActiveProjectiles[i]->Update();
+                Projectile::s_ActiveProjectiles[i]->GetDrawData()->BindRenderable();
+                renderer.Draw(Projectile::s_ActiveProjectiles[i]->GetDrawData());
+            }
+        }
         
 
         GLCall(glfwSwapBuffers(window));
