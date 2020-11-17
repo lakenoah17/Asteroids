@@ -14,7 +14,7 @@ public:
 	static unsigned int s_NumOfProjectiles;
 
 private:
-	glm::vec3 velocity;
+	glm::vec2 velocity;
 	unsigned int projectileIndex;
 
 };

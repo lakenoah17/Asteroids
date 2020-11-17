@@ -22,7 +22,7 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 		return;
 	}
 
-	velocity = glm::vec3(cos(angleToFireAt), sin(angleToFireAt), 0);
+	velocity = glm::vec2(4 * cos(angleToFireAt), 4 * sin(angleToFireAt));
 	s_ActiveProjectiles[projectileIndex] = this;
 }
 
@@ -36,8 +36,7 @@ void Projectile::Update()
 	collider->SetXPos(collider->GetXPos() + velocity.x);
 	collider->SetYPos(collider->GetYPos() + velocity.y);
 
-	position->x += velocity.x;
-	position->y += velocity.y;
+	*position += velocity;
 
 	int screenWidth;
 	int screenHeight;
@@ -49,6 +48,6 @@ void Projectile::Update()
 		return;
 	}
 
-	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
+	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
