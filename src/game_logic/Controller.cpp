@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include <iostream>
 
 Controller::Controller(GameObject* parent, glm::vec2* position, glm::vec4* colliderRect, float& rotation)
 	:parent(parent), parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
@@ -13,8 +14,6 @@ Controller::~Controller()
 
 void Controller::Update()
 {
-	velocity += acceleration;
-
 	if (glm::length(velocity) > 5.0f  || glm::length(velocity) < -5.0f)
 	{
 		acceleration = glm::vec2(0.0f);
@@ -50,7 +49,7 @@ void Controller::Update()
 		}
 	}
 
-	
+	velocity += acceleration;
 
 	*parentPosition += velocity;
 
@@ -72,10 +71,7 @@ void Controller::Update()
 		parentPosition->y = -2.5f;
 	}
 
-	parentColliderRect->x += velocity.x;
-	parentColliderRect->y += velocity.y;
-
-	parent->GetDrawData()->model = glm::translate(glm::mat4(1.0f), glm::vec3(parentPosition->x, parentPosition->y, 0));
+	
 
 	if (glfwGetKey(currWindow, GLFW_KEY_A))
 	{
@@ -91,6 +87,12 @@ void Controller::Update()
 	{
 		FireProjectile();
 	}
+
+	parentColliderRect->x += velocity.x;
+	parentColliderRect->y += velocity.y;
+	std::cout << parentPosition->x << " " << parentPosition->y << std::endl;
+
+	parent->GetDrawData()->model = glm::translate(glm::mat4(1.0f), glm::vec3(parentPosition->x, parentPosition->y, 0));
 	
 	parent->GetDrawData()->model = glm::rotate(parent->GetDrawData()->model, *parentRotation - glm::half_pi<float>(), glm::vec3(0, 0, 1));
 }

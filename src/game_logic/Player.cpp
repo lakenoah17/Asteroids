@@ -3,8 +3,8 @@
 Player::Player()
 {
 	//Creates Collider and initializes position of GameObject from the values passed in
-	collider = new Collider(100, 100, 25, 25);
-	position = new glm::vec2(112.5f, 112.5f);
+	collider = new Collider(-12.5, 12.5, 25, 25);
+	position = new glm::vec2(0, 0);
 
 	//Initializes the verticies at positions specified by the params
 	verticies = new float[16]
@@ -23,13 +23,15 @@ Player::Player()
 		3, 0
 	};
 
+	rotation = glm::half_pi<float>();
+
 	controls = new Controller(this, position, collider->GetRect(), rotation);
 
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 16, 4, indicies, 8);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
-	renderData->mvp = renderData->proj * renderData->view * renderData->model;
+	renderData->mvp = renderData->view * renderData->model;
 }
 
 void Player::Update() {

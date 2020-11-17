@@ -75,8 +75,6 @@ int main()
     gameObjects.push_back(temp1);
     gameObjects.push_back(temp2);
 
-    Projectile proj(10.0f, 10.0f, 10.0f, 10.0f, 45.0f);
-
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         renderer.Clear();
@@ -85,9 +83,9 @@ int main()
         {
             if (Projectile::s_ActiveProjectiles[i] != NULL)
             {
-                Projectile::s_ActiveProjectiles[i]->Update();
                 Projectile::s_ActiveProjectiles[i]->GetDrawData()->BindRenderable();
                 renderer.Draw(Projectile::s_ActiveProjectiles[i]->GetDrawData());
+                Projectile::s_ActiveProjectiles[i]->Update();
             }
         }
         

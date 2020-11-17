@@ -16,13 +16,13 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 {
 	projectileIndex = s_NumOfProjectiles;
 	s_NumOfProjectiles++;
-	/*if (s_NumOfProjectiles > 2)
+	if (s_NumOfProjectiles > 2)
 	{
 		delete this;
 		return;
-	}*/
+	}
 
-	velocity = glm::vec3(.05 * cos(angleToFireAt), .05 * sin(angleToFireAt), 0);
+	velocity = glm::vec3(cos(angleToFireAt), sin(angleToFireAt), 0);
 	s_ActiveProjectiles[projectileIndex] = this;
 }
 
