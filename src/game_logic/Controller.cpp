@@ -3,7 +3,7 @@
 Controller::Controller(GameObject* parent, glm::vec2* position, glm::vec4* colliderRect, float& rotation)
 	:parent(parent), parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
 {
-	velocity = glm::vec3(0,0,0);
+	velocity = glm::vec2(0,0);
 	acceleration = glm::vec2(0, 0);
 }
 
@@ -13,17 +13,11 @@ Controller::~Controller()
 
 void Controller::Update()
 {
-	velocity.x += acceleration.x;
-	velocity.y += acceleration.y;
+	velocity += acceleration;
 
-	if (velocity.x > 7.5f || velocity.x < -7.5f)
+	if (glm::length(velocity) > 5.0f  || glm::length(velocity) < -5.0f)
 	{
-		acceleration.x = 0;
-	}
-
-	if (velocity.y > 7.5f || velocity.y < -7.5f)
-	{
-		acceleration.y = 0;
+		acceleration = glm::vec2(0.0f);
 	}
 
 	if (glfwGetKey(currWindow, GLFW_KEY_W))
@@ -32,14 +26,9 @@ void Controller::Update()
 	}
 	else
 	{
-		if (acceleration.x <= 0.02f && acceleration.x >= -0.02f)
+		if (glm::length(acceleration) <= 0.015f || glm::length(acceleration) >= -0.015f)
 		{
-			acceleration.x = 0;
-		}
-
-		if(acceleration.y <= 0.02f && acceleration.y >= -0.02f)
-		{
-			acceleration.y = 0;
+			acceleration = glm::vec2(0.0f);
 		}
 
 		if (velocity.y > 0)
@@ -63,8 +52,7 @@ void Controller::Update()
 
 	
 
-	parentPosition->x += velocity.x;
-	parentPosition->y += velocity.y;
+	*parentPosition += velocity;
 
 	int screenWidth;
 	int screenHeight;

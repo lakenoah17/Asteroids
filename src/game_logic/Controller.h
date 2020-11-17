@@ -13,7 +13,7 @@ public:
 	~Controller();
 
 	void Update();
-	glm::vec3 GetVelocity() { return velocity; }
+	glm::vec2 GetVelocity() { return velocity; }
 
 private:
 	GameObject* parent;
@@ -21,7 +21,7 @@ private:
 	glm::vec4* parentColliderRect;
 	float* parentRotation;
 
-	glm::vec3 velocity;
+	glm::vec2 velocity;
 	glm::vec2 acceleration;
 	const float thrustMagnitude = 0.005f;
 
