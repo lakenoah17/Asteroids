@@ -81,10 +81,6 @@ int main()
     {
         renderer.Clear();
 
-        player.Update();
-        player.GetDrawData()->BindRenderable();
-        renderer.Draw(player.GetDrawData(), GL_LINES);
-
         for (int i = 0; i < 2; i++)
         {
             if (Projectile::s_ActiveProjectiles[i] != NULL)
@@ -95,6 +91,9 @@ int main()
             }
         }
         
+        player.Update();
+        player.GetDrawData()->BindRenderable();
+        renderer.Draw(player.GetDrawData(), GL_LINES);
 
         GLCall(glfwSwapBuffers(window));
 

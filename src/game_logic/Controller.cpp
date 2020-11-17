@@ -123,12 +123,9 @@ void Controller::TurnRight()
 	*parentRotation -= .1f;
 }
 
-void Controller::MoveBackward()
-{
-	acceleration[0] -= thrustMagnitude * acceleration[0] * cos(*parentRotation);
-	acceleration[1] -= thrustMagnitude * acceleration[1] * sin(*parentRotation);
-}
-
 void Controller::FireProjectile() {
-	Projectile test(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
+	if (Projectile::s_NumOfProjectiles < 2)
+	{
+		new Projectile(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
+	}
 }

@@ -28,6 +28,5 @@ private:
 	void MoveForward();
 	void TurnLeft();
 	void TurnRight();
-	void MoveBackward();
 	void FireProjectile();
 };
