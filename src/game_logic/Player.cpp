@@ -32,8 +32,12 @@ Player::Player()
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
-void Player::Update() {
-	controls->Update();
+/// <summary>
+/// Updates the players position based on calculations from the controllers update method
+/// </summary>
+/// <param name="deltaTime">The time between this frame and the last frame</param>
+void Player::Update(float deltaTime) {
+	controls->Update(deltaTime);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));

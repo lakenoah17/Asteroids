@@ -12,5 +12,5 @@ public:
 
 	Player();
 
-	void Update() override;
+	void Update(float deltaTime) override;
 };

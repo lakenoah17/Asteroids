@@ -12,7 +12,7 @@ public:
 	Controller(glm::vec2* position, glm::vec4* colliderRect, float& rotation);
 	~Controller();
 
-	void Update();
+	void Update(float deltaTime);
 	glm::vec2 GetVelocity() { return velocity; }
 
 private:
@@ -22,13 +22,12 @@ private:
 
 	glm::vec2 velocity;
 	glm::vec2 acceleration;
-	const float thrustMagnitude = 0.005f;
+	const float thrustMagnitude = 0.5f;
+	const float rotationalSpeed = 5.0f;
+	const float frictionMagnitude = 2.0f;
 
 	//Used to decide the first frame the space key is pressed
 	bool firstSpaceFrame = false;
 
-	void MoveForward();
-	void TurnLeft();
-	void TurnRight();
 	void FireProjectile();
 };

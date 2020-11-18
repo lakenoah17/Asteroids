@@ -38,7 +38,7 @@ int main()
 
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1080, 760, "Learning OpenGL", NULL, NULL);
+    window = glfwCreateWindow(1080, 760, "Asteroids by Noah Shields", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -69,8 +69,17 @@ int main()
 
     Player* player = new Player();
 
+    float oldTime = clock();
+    float deltaTime = 0.0f;
+
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
+        //Calculates the deltaTime between loops
+        float newTime = clock();
+        //Changes deltaTime to be in seconds
+        deltaTime = (newTime - oldTime) / 1000;
+        oldTime = newTime;
+
         renderer.Clear();
 
         for (int i = 0; i < Projectile::MAX_NUMBER_OF_PROJECTILES; i++)
@@ -79,14 +88,11 @@ int main()
             {
                 Projectile::s_ActiveProjectiles[i]->GetDrawData()->BindRenderable();
                 renderer.Draw(Projectile::s_ActiveProjectiles[i]->GetDrawData());
-                Projectile::s_ActiveProjectiles[i]->Update();
-
-                GameObject* gameObj = new GameObject();
-                delete gameObj;
+                Projectile::s_ActiveProjectiles[i]->Update(deltaTime);
             }
         }
         
-        player->Update();
+        player->Update(deltaTime);
         player->GetDrawData()->BindRenderable();
         renderer.Draw(player->GetDrawData(), GL_LINES);
 

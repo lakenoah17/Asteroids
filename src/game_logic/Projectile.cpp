@@ -26,7 +26,7 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 	}
 
 	//Intialized the velocity which won't be changed after this point
-	velocity = glm::vec2(4 * cos(angleToFireAt), 4 * sin(angleToFireAt));
+	velocity = 200.0f * glm::vec2(cos(angleToFireAt), sin(angleToFireAt));
 	s_ActiveProjectiles[projectileIndex] = this;
 }
 
@@ -44,13 +44,14 @@ Projectile::~Projectile()
 /// <summary>
 /// Updates the position of the Projectile based on the velocity and decides whether it should be deleted or not
 /// </summary>
-void Projectile::Update()
+/// <param name="deltaTime">The time between this frame and the last frame</param>
+void Projectile::Update(float deltaTime)
 {
 	//Adjust both the colliders position and the GameObjects position
-	collider->SetXPos(collider->GetXPos() + velocity.x);
-	collider->SetYPos(collider->GetYPos() + velocity.y);
+	collider->SetXPos(collider->GetXPos() + velocity.x * deltaTime);
+	collider->SetYPos(collider->GetYPos() + velocity.y * deltaTime);
 
-	*position += velocity;
+	*position += velocity * deltaTime;
 
 	int screenWidth;
 	int screenHeight;
@@ -64,7 +65,7 @@ void Projectile::Update()
 	}
 
 	//Adjusts the graphical position
-	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
+	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x * deltaTime, velocity.y * deltaTime, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 

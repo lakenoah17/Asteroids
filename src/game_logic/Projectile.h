@@ -14,7 +14,7 @@ public:
 
 	Projectile(float x, float y, float width, float height, float angleToFireAt);
 	~Projectile();
-	void Update() override;
+	void Update(float deltaTime) override;
 	static Projectile* s_ActiveProjectiles[MAX_NUMBER_OF_PROJECTILES];
 	static unsigned int s_NumOfProjectiles;
 

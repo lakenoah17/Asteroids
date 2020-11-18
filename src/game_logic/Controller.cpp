@@ -21,7 +21,8 @@ Controller::~Controller()
 /// <summary>
 /// Updates the velocity, acceleration, and position vectors
 /// </summary>
-void Controller::Update()
+/// <param name="deltaTime">The time between this frame and the last frame</param>
+void Controller::Update(float deltaTime)
 {
 	//This maxes out the velocity at a little over 5.0f making it so the player can't go too fast
 	if (glm::length(velocity) > 5.0f  || glm::length(velocity) < -5.0f)
@@ -33,12 +34,12 @@ void Controller::Update()
 	//Rotates the object counter-clockwise when the A key is pressed
 	if (glfwGetKey(currWindow, GLFW_KEY_A))
 	{
-		TurnLeft();
+		*parentRotation += rotationalSpeed * deltaTime;
 	}
 	//Rotates the object clockwise when the D key is pressed
 	if (glfwGetKey(currWindow, GLFW_KEY_D))
 	{
-		TurnRight();
+		*parentRotation -= rotationalSpeed * deltaTime;
 	}
 	#pragma endregion
 
@@ -46,7 +47,8 @@ void Controller::Update()
 	//Moves the play forward when the W key is pressed
 	if (glfwGetKey(currWindow, GLFW_KEY_W))
 	{
-		MoveForward();
+		acceleration.x += thrustMagnitude * glm::cos(*parentRotation) * deltaTime;
+		acceleration.y += thrustMagnitude * glm::sin(*parentRotation) * deltaTime;
 	}
 	else
 	{
@@ -60,20 +62,20 @@ void Controller::Update()
 		//opposite to the direction of motion and slow the object down over time
 		if (velocity.y > 0)
 		{
-			acceleration.y -= .02f;
+			acceleration.y -= frictionMagnitude * deltaTime;
 		}
 		if (velocity.x > 0)
 		{
-			acceleration.x -= .02f;
+			acceleration.x -= frictionMagnitude * deltaTime;
 		}
 
 		if (velocity.y < 0)
 		{
-			acceleration.y += .02f;
+			acceleration.y += frictionMagnitude * deltaTime;
 		}
 		if (velocity.x < 0)
 		{
-			acceleration.x += .02f;
+			acceleration.x += frictionMagnitude * deltaTime;
 		}
 	}
 
@@ -121,31 +123,6 @@ void Controller::Update()
 	{
 		firstSpaceFrame = false;
 	}
-}
-
-/// <summary>
-/// Increases the acceleration by the thrust magnitude in the direction of the parents rotation
-/// </summary>
-void Controller::MoveForward()
-{
-	acceleration.x += thrustMagnitude * glm::cos(*parentRotation);
-	acceleration.y += thrustMagnitude * glm::sin(*parentRotation);
-}
-
-/// <summary>
-/// Rotates the parent object counter-clockwise
-/// </summary>
-void Controller::TurnLeft()
-{
-	*parentRotation += .1f;
-}
-
-/// <summary>
-/// Rotates the parent object clockwise
-/// </summary>
-void Controller::TurnRight()
-{
-	*parentRotation -= .1f;
 }
 
 /// <summary>

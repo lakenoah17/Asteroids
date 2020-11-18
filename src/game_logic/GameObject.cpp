@@ -117,7 +117,11 @@ Renderable* GameObject::GetDrawData()
 	return renderData;
 }
 
-void GameObject::Update()
+/// <summary>
+/// Updates the GameObject
+/// </summary>
+/// <param name="deltaTime">The time between this frame and the last frame</param>
+void GameObject::Update(float deltaTime)
 {
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(collider->GetXPos(), collider->GetYPos(), 0));
