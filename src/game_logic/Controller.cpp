@@ -57,18 +57,18 @@ void Controller::Update()
 	int screenHeight;
 	glfwGetWindowSize(currWindow, &screenWidth, &screenHeight);
 
-	if (parentPosition->x < -5) {
-		parentPosition->x = screenWidth + 2.5f;
+	if (parentPosition->x < -2.5) {
+		parentPosition->x = screenWidth - 3.0f;
 	}
-	if (parentPosition->x > screenWidth + 5) {
+	if (parentPosition->x > screenWidth) {
 		parentPosition->x = -2.5f;
 	}
 
-	if (parentPosition->y < -5) {
-		parentPosition->y = screenHeight + 2.5f;
+	if (parentPosition->y < -2.0) {
+		parentPosition->y = screenHeight - 5.0f;
 	}
-	if (parentPosition->y > screenHeight + 5) {
-		parentPosition->y = -2.5f;
+	if (parentPosition->y > screenHeight - 5.0f) {
+		parentPosition->y = -2.0f;
 	}
 
 	if (glfwGetKey(currWindow, GLFW_KEY_A))
