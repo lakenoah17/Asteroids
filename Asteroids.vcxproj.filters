@@ -57,6 +57,9 @@
     <ClCompile Include="src\game_logic\Projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_logic\Asteroid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -1384,6 +1387,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game_logic\Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_logic\Asteroid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

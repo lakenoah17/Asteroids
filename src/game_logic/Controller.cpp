@@ -4,7 +4,7 @@
 Controller::Controller(GameObject* parent, glm::vec2* position, glm::vec4* colliderRect, float& rotation)
 	:parent(parent), parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
 {
-	velocity = glm::vec2(0,0);
+	velocity = glm::vec2(0, 0);
 	acceleration = glm::vec2(0, 0);
 }
 
@@ -71,8 +71,6 @@ void Controller::Update()
 		parentPosition->y = -2.5f;
 	}
 
-	
-
 	if (glfwGetKey(currWindow, GLFW_KEY_A))
 	{
 		TurnLeft();
@@ -90,17 +88,12 @@ void Controller::Update()
 
 	parentColliderRect->x += velocity.x;
 	parentColliderRect->y += velocity.y;
-	std::cout << parentPosition->x << " " << parentPosition->y << std::endl;
-
-	parent->GetDrawData()->model = glm::translate(glm::mat4(1.0f), glm::vec3(parentPosition->x, parentPosition->y, 0));
-	
-	parent->GetDrawData()->model = glm::rotate(parent->GetDrawData()->model, *parentRotation - glm::half_pi<float>(), glm::vec3(0, 0, 1));
 }
 
 void Controller::MoveForward()
 {
-	acceleration.x += thrustMagnitude * cos(*parentRotation);
-	acceleration.y += thrustMagnitude * sin(*parentRotation);
+	acceleration.x += thrustMagnitude * glm::cos(*parentRotation);
+	acceleration.y += thrustMagnitude * glm::sin(*parentRotation);
 }
 
 void Controller::TurnLeft()
@@ -114,8 +107,5 @@ void Controller::TurnRight()
 }
 
 void Controller::FireProjectile() {
-	if (Projectile::s_NumOfProjectiles < 2)
-	{
-		new Projectile(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
-	}
+	new Projectile(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
 }

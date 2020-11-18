@@ -25,6 +25,7 @@
 static int s_GameState = 0;
 
 GLFWwindow* Controller::currWindow;
+const unsigned int Projectile::MAX_NUMBER_OF_PROJECTILES;
 
 int main()
 {
@@ -66,32 +67,28 @@ int main()
     Controller::currWindow = window;
     Projectile::currWindow = window;
 
-    std::list<GameObject> gameObjects;
-
-    GameObject temp2(100, 100, 50, 100);
-    GameObject temp1(0, 0, 200, 200);
-    Player player;
-
-    gameObjects.push_back(temp1);
-    gameObjects.push_back(temp2);
+    Player* player = new Player();
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         renderer.Clear();
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < Projectile::MAX_NUMBER_OF_PROJECTILES; i++)
         {
             if (Projectile::s_ActiveProjectiles[i] != NULL)
             {
                 Projectile::s_ActiveProjectiles[i]->GetDrawData()->BindRenderable();
                 renderer.Draw(Projectile::s_ActiveProjectiles[i]->GetDrawData());
                 Projectile::s_ActiveProjectiles[i]->Update();
+
+                GameObject* gameObj = new GameObject();
+                delete gameObj;
             }
         }
         
-        player.Update();
-        player.GetDrawData()->BindRenderable();
-        renderer.Draw(player.GetDrawData(), GL_LINES);
+        player->Update();
+        player->GetDrawData()->BindRenderable();
+        renderer.Draw(player->GetDrawData(), GL_LINES);
 
         GLCall(glfwSwapBuffers(window));
 
@@ -102,6 +99,7 @@ int main()
             s_GameState = -1;
         }
     }
+    delete player;
 
     glfwTerminate();
     return 0;

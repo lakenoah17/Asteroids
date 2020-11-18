@@ -2,7 +2,8 @@
 
 GLFWwindow* Projectile::currWindow;
 unsigned int Projectile::s_NumOfProjectiles;
-Projectile* Projectile::s_ActiveProjectiles[2];
+const unsigned int Projectile::MAX_NUMBER_OF_PROJECTILES;
+Projectile* Projectile::s_ActiveProjectiles[MAX_NUMBER_OF_PROJECTILES];
 
 /// <summary>
 /// Initializes a Projectile with all of the data necessary to create a Collider object
@@ -16,7 +17,7 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 {
 	projectileIndex = s_NumOfProjectiles;
 	s_NumOfProjectiles++;
-	if (s_NumOfProjectiles > 2)
+	if (s_NumOfProjectiles > MAX_NUMBER_OF_PROJECTILES)
 	{
 		delete this;
 		return;
@@ -29,6 +30,9 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 Projectile::~Projectile()
 {
 	s_NumOfProjectiles--;
+	for (int i = projectileIndex+1; i < s_NumOfProjectiles + projectileIndex+1 && i < MAX_NUMBER_OF_PROJECTILES; i++) {
+		s_ActiveProjectiles[i]->ShiftProjectile();
+	}
 }
 
 void Projectile::Update()
@@ -50,4 +54,14 @@ void Projectile::Update()
 
 	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
+}
+
+void Projectile::ShiftProjectile()
+{
+	if (this != nullptr && projectileIndex != 0)
+	{
+		s_ActiveProjectiles[projectileIndex-1] = s_ActiveProjectiles[projectileIndex];
+		s_ActiveProjectiles[projectileIndex] = NULL;
+		projectileIndex--;
+	}
 }
