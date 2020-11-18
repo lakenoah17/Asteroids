@@ -17,16 +17,22 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 {
 	projectileIndex = s_NumOfProjectiles;
 	s_NumOfProjectiles++;
+
+	//If this projectile would be over the maximum number of Projectiles it deletes itself
 	if (s_NumOfProjectiles > MAX_NUMBER_OF_PROJECTILES)
 	{
 		delete this;
 		return;
 	}
 
+	//Intialized the velocity which won't be changed after this point
 	velocity = glm::vec2(4 * cos(angleToFireAt), 4 * sin(angleToFireAt));
 	s_ActiveProjectiles[projectileIndex] = this;
 }
 
+/// <summary>
+/// Destroys this projectile and shifts all of the other projectiles to fill the empty space created when the projectile is deleted
+/// </summary>
 Projectile::~Projectile()
 {
 	s_NumOfProjectiles--;
@@ -35,8 +41,12 @@ Projectile::~Projectile()
 	}
 }
 
+/// <summary>
+/// Updates the position of the Projectile based on the velocity and decides whether it should be deleted or not
+/// </summary>
 void Projectile::Update()
 {
+	//Adjust both the colliders position and the GameObjects position
 	collider->SetXPos(collider->GetXPos() + velocity.x);
 	collider->SetYPos(collider->GetYPos() + velocity.y);
 
@@ -46,16 +56,21 @@ void Projectile::Update()
 	int screenHeight;
 	glfwGetWindowSize(currWindow, &screenWidth, &screenHeight);
 
+	//Deletes this projectile if it is outside of the bounds of the window
 	if (position->x < -5 || position->x > screenWidth + 5 || position->y < -5 || position->y > screenHeight + 5) {
 		s_ActiveProjectiles[projectileIndex] = NULL;
 		delete this;
 		return;
 	}
 
+	//Adjusts the graphical position
 	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
+/// <summary>
+/// Shifts the projectile as far left as it can be in the s_ActiveProjectiles array
+/// </summary>
 void Projectile::ShiftProjectile()
 {
 	if (this != nullptr && projectileIndex != 0)

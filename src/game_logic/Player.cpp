@@ -23,7 +23,7 @@ Player::Player()
 		3, 0
 	};
 
-	controls = new Controller(this, position, collider->GetRect(), rotation);
+	controls = new Controller(position, collider->GetRect(), rotation);
 
 	renderData = Renderer::CreateRenderable("res/shaders/Spaceship.shader", verticies, 16, 4, indicies, 8);
 
