@@ -79,7 +79,7 @@ Renderable* Renderer::CreateRenderable(Shader* shader, VertexBuffer* vb, VertexA
 /// <summary>
 /// Clears the screen of everything
 /// </summary>
-void Renderer::Clear() const
+void Renderer::Clear()
 {
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
@@ -88,7 +88,7 @@ void Renderer::Clear() const
 /// Draws to the screen using a Renderable struct
 /// </summary>
 /// <param name="objToRender">The struct to use for rendering</param>
-void Renderer::Draw(Renderable* objToRender) const {
+void Renderer::Draw(Renderable* objToRender) {
     objToRender->BindRenderable();
     objToRender->shader->SetUniformMat4f("u_MVP", objToRender->mvp);
 
@@ -100,7 +100,7 @@ void Renderer::Draw(Renderable* objToRender) const {
 /// </summary>
 /// <param name="objToRender">The struct to use for rendering</param>
 /// <param name="drawType">The type of drawing OpenGL will use to render the object</param>
-void Renderer::Draw(Renderable* objToRender, unsigned int drawType) const {
+void Renderer::Draw(Renderable* objToRender, unsigned int drawType) {
     objToRender->BindRenderable();
     objToRender->shader->SetUniformMat4f("u_MVP", objToRender->mvp);
     GLCall(glDrawElements(drawType, objToRender->ib->GetCount(), GL_UNSIGNED_INT, nullptr));

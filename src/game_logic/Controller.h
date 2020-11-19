@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Projectile.h"
 #include "GLFW/glfw3.h"
 
 
@@ -19,6 +18,7 @@ private:
 	glm::vec2* parentPosition;
 	glm::vec4* parentColliderRect;
 	float* parentRotation;
+	ProjectileManager* pm;
 
 	glm::vec2 velocity;
 	glm::vec2 acceleration;
@@ -28,6 +28,4 @@ private:
 
 	//Used to decide the first frame the space key is pressed
 	bool firstSpaceFrame = false;
-
-	void FireProjectile();
 };

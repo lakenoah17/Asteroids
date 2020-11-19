@@ -15,6 +15,8 @@
 #include "game_logic/GameObject.h"
 #include "game_logic/Controller.h"
 #include "game_logic/Player.h"
+#include "game_logic/Asteroid.h"
+#include "game_logic/ProjectileManager.h"
 
 #include <thread>
 
@@ -25,7 +27,6 @@
 static int s_GameState = 0;
 
 GLFWwindow* Controller::currWindow;
-const unsigned int Projectile::MAX_NUMBER_OF_PROJECTILES;
 
 int main()
 {
@@ -57,20 +58,21 @@ int main()
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    Renderer renderer;
-
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     GLCall(glEnable(GL_BLEND));
 
     #pragma endregion
 
     Controller::currWindow = window;
-    Projectile::currWindow = window;
+
+    ProjectileManager* projManager = new ProjectileManager(window);
 
     Player* player = new Player();
 
     float oldTime = clock();
     float deltaTime = 0.0f;
+
+    Asteroid asteroid;
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
@@ -80,21 +82,16 @@ int main()
         deltaTime = (newTime - oldTime) / 1000;
         oldTime = newTime;
 
-        renderer.Clear();
+        Renderer::Clear();
 
-        for (int i = 0; i < Projectile::MAX_NUMBER_OF_PROJECTILES; i++)
-        {
-            if (Projectile::s_ActiveProjectiles[i] != NULL)
-            {
-                Projectile::s_ActiveProjectiles[i]->GetDrawData()->BindRenderable();
-                renderer.Draw(Projectile::s_ActiveProjectiles[i]->GetDrawData());
-                Projectile::s_ActiveProjectiles[i]->Update(deltaTime);
-            }
-        }
+        projManager->UpdateProjectiles(deltaTime);
+        projManager->DrawProjectiles();
+
+        asteroid.Update(deltaTime);
+        asteroid.Draw();
         
         player->Update(deltaTime);
-        player->GetDrawData()->BindRenderable();
-        renderer.Draw(player->GetDrawData(), GL_LINES);
+        player->Draw();
 
         GLCall(glfwSwapBuffers(window));
 

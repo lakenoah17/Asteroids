@@ -15,7 +15,8 @@ public:
 	Asteroid(glm::vec2 position, glm::vec2 velocity, AsteroidSize size, float rotation);
 	~Asteroid();
 
-	void Update();
+	void Update(float deltaTime) override;
+	void Draw() override;
 
 private:
 	glm::vec2 velocity;

@@ -44,7 +44,7 @@ struct Renderable {
     }
 };
 
-class Renderer {
+static class Renderer {
 public:
     static Renderable* CreateRenderable(std::string shaderPath, float* verticies, 
                                         unsigned int verticiesLen, unsigned int strideLen,
@@ -52,7 +52,10 @@ public:
 
     static Renderable* CreateRenderable(Shader* shader, VertexBuffer* vb, VertexArray* vao, IndexBuffer* ib);
 
-    void Clear() const;
-    void Draw(Renderable* objToRender) const;
-    void Draw(Renderable* objToRender, unsigned int drawType) const;
+    static void Clear();
+    static void Draw(Renderable* objToRender);
+    static void Draw(Renderable* objToRender, unsigned int drawType);
+
+private:
+    Renderer();
 };

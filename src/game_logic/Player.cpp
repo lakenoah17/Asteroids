@@ -41,8 +41,15 @@ void Player::Update(float deltaTime) {
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
-
 	renderData->model = glm::rotate(renderData->model, rotation - glm::half_pi<float>(), glm::vec3(0, 0, 1));
-
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
+}
+
+/// <summary>
+/// Binds and draws a player to the screen
+/// </summary>
+void Player::Draw()
+{
+	renderData->BindRenderable();
+	Renderer::Draw(renderData, GL_LINES);
 }

@@ -116,19 +116,11 @@ void Controller::Update(float deltaTime)
 	//The key needs to be released to allow for another projectile to be fired
 	if (glfwGetKey(currWindow, GLFW_KEY_SPACE) && !firstSpaceFrame)
 	{
-		FireProjectile();
+		
 		firstSpaceFrame = true;
 	}
 	else if(!glfwGetKey(currWindow, GLFW_KEY_SPACE))
 	{
 		firstSpaceFrame = false;
 	}
-}
-
-/// <summary>
-/// Fires a projectile
-/// </summary>
-void Controller::FireProjectile() {
-	//No need to store a reference as the Projectile class handles everything itself
-	new Projectile(parentPosition->x, parentPosition->y, 5, 5, *parentRotation);
 }

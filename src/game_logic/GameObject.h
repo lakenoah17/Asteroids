@@ -25,7 +25,8 @@ public:
 
 	~GameObject();
 
-	Renderable* GetDrawData();
-
 	virtual void Update(float deltaTime);
+	virtual void Draw();
+
+	glm::vec2* GetPosition() { return position; }
 };
