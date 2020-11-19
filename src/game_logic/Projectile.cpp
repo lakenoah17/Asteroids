@@ -43,5 +43,5 @@ void Projectile::Update(float deltaTime)
 void Projectile::Draw()
 {
 	renderData->BindRenderable();
-	Renderer::Draw(renderData, GL_LINES);
+	Renderer::Draw(renderData);
 }

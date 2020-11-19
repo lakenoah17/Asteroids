@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ProjectileManager.h"
 #include "GLFW/glfw3.h"
 
 

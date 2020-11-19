@@ -25,6 +25,8 @@ Player::Player()
 
 	controls = new Controller(position, collider->GetRect(), rotation);
 
+	pm = new ProjectileManager(Controller::currWindow);
+
 	renderData = Renderer::CreateRenderable("res/shaders/Spaceship.shader", verticies, 16, 4, indicies, 8);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject

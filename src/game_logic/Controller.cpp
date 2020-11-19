@@ -116,7 +116,8 @@ void Controller::Update(float deltaTime)
 	//The key needs to be released to allow for another projectile to be fired
 	if (glfwGetKey(currWindow, GLFW_KEY_SPACE) && !firstSpaceFrame)
 	{
-		
+		pm->FireNewProjectile(parentPosition->x, parentPosition->y, *parentRotation);
+
 		firstSpaceFrame = true;
 	}
 	else if(!glfwGetKey(currWindow, GLFW_KEY_SPACE))

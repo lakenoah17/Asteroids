@@ -61,3 +61,8 @@ Asteroid::~Asteroid()
 void Asteroid::Update(float deltaTime)
 {
 }
+
+void Asteroid::Draw() {
+	renderData->BindRenderable();
+	Renderer::Draw(renderData, GL_LINES);
+}
