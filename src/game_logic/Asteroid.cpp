@@ -44,8 +44,8 @@ Asteroid::Asteroid()
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
-Asteroid::Asteroid(glm::vec2* position, glm::vec2 velocity, AsteroidSize size, float rotation)
-	: velocity(velocity), size(size), rotation(rotation)
+Asteroid::Asteroid(glm::vec2* position, glm::vec2 velocity, AsteroidSize size, float rotation, float timeToSpawn)
+	: velocity(velocity), size(size), rotation(rotation), timeToSpawn(timeToSpawn)
 {
 	position = position;
 	//Creates Collider and initializes position of GameObject from the values passed in

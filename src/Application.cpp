@@ -17,6 +17,7 @@
 #include "game_logic/Player.h"
 #include "game_logic/Asteroid.h"
 #include "game_logic/ProjectileManager.h"
+#include "game_logic/AsteroidManager.h"
 
 #include <thread>
 
@@ -67,6 +68,9 @@ int main()
 
     ProjectileManager* projManager = new ProjectileManager(window);
 
+    AsteroidManager* am = new AsteroidManager(window);
+    am->GenerateAsteroids(5);
+
     Player* player = new Player();
 
     float oldTime = clock();
@@ -89,6 +93,9 @@ int main()
 
         asteroid.Update(deltaTime);
         asteroid.Draw();
+
+        am->UpdateAsteroids(deltaTime);
+        am->DrawAsteroids();
         
         player->Update(deltaTime);
         player->Draw();
