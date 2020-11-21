@@ -12,7 +12,7 @@ class Asteroid : public GameObject
 {
 public:
 	Asteroid();
-	Asteroid(glm::vec2 position, glm::vec2 velocity, AsteroidSize size, float rotation);
+	Asteroid(glm::vec2* position, glm::vec2 velocity, AsteroidSize size, float rotation);
 	~Asteroid();
 
 	void Update(float deltaTime) override;
@@ -21,5 +21,5 @@ public:
 private:
 	glm::vec2 velocity;
 	float rotation;
-
+	AsteroidSize size;
 };

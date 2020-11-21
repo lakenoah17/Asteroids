@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\game_logic\Asteroid.cpp" />
+    <ClCompile Include="src\game_logic\AsteroidManager.cpp" />
     <ClCompile Include="src\game_logic\Collider.cpp" />
     <ClCompile Include="src\game_logic\Controller.cpp" />
     <ClCompile Include="src\game_logic\GameObject.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h" />
     <ClInclude Include="src\game_logic\Asteroid.h" />
+    <ClInclude Include="src\game_logic\AsteroidManager.h" />
     <ClInclude Include="src\game_logic\Collider.h" />
     <ClInclude Include="src\game_logic\Controller.h" />
     <ClInclude Include="src\game_logic\GameObject.h" />

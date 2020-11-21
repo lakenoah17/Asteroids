@@ -28,7 +28,6 @@ Projectile::~Projectile()
 /// <param name="deltaTime">The time between this frame and the last frame</param>
 void Projectile::Update(float deltaTime)
 {
-
 	//Adjust both the colliders position and the GameObjects position
 	collider->SetXPos(collider->GetXPos() + velocity.x * deltaTime);
 	collider->SetYPos(collider->GetYPos() + velocity.y * deltaTime);
