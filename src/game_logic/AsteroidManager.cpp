@@ -37,6 +37,7 @@ void AsteroidManager::BreakAsteroid()
 //Possibly unneeded
 void AsteroidManager::UpdateAsteroidCount(unsigned int numAsteroids)
 {
+
 }
 
 void AsteroidManager::GenerateAsteroids(unsigned int level)
@@ -58,10 +59,21 @@ void AsteroidManager::GenerateAsteroids(unsigned int level)
 		{
 			yPos = rand() >= .5f ? -4 : screenHeight + 4;
 		}
-		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos,yPos), glm::vec2(.5f), AsteroidSize::SMALL, 1, 10.0f);
+		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos,yPos), glm::vec2(2.5f), AsteroidSize::SMALL, 1, 10.0f);
 	}
 }
 
+/// <summary>
+/// Shifts all of the asteroids to fill space in the array
+/// </summary>
 void AsteroidManager::ShiftAsteroids()
 {
+	for (int i = 1; i < s_NumOfAsteroids; i++)
+	{
+		if (this != nullptr)
+		{
+			s_ActiveAsteroids[i - 1] = s_ActiveAsteroids[i];
+			s_ActiveAsteroids[i] = NULL;
+		}
+	}
 }

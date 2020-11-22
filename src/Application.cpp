@@ -69,7 +69,7 @@ int main()
     ProjectileManager* projManager = new ProjectileManager(window);
 
     AsteroidManager* am = new AsteroidManager(window);
-    am->GenerateAsteroids(5);
+    am->GenerateAsteroids(10);
 
     Player* player = new Player();
 

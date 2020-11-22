@@ -35,7 +35,7 @@ Asteroid::Asteroid()
 	};
 
 	rotation = 45;
-	velocity = 100.0f * glm::vec2(cos(rotation), sin(rotation));
+	velocity = 10.0f * glm::vec2(cos(rotation), sin(rotation));
 
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 
@@ -44,10 +44,10 @@ Asteroid::Asteroid()
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
-Asteroid::Asteroid(glm::vec2* position, glm::vec2 velocity, AsteroidSize size, float rotation, float timeToSpawn)
+Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize size, float rotation, float timeToSpawn)
 	: velocity(velocity), size(size), rotation(rotation), timeToSpawn(timeToSpawn)
 {
-	position = position;
+	position = thisPosition;
 	//Creates Collider and initializes position of GameObject from the values passed in
 	collider = new Collider(position->x - 25, position->y + 25, 50, 50);
 
@@ -92,14 +92,35 @@ Asteroid::~Asteroid()
 
 void Asteroid::Update(float deltaTime)
 {
-	//Adjust both the colliders position and the GameObjects position
-	collider->SetXPos(collider->GetXPos() + velocity.x * deltaTime);
-	collider->SetYPos(collider->GetYPos() + velocity.y * deltaTime);
-
 	*position += velocity * deltaTime;
 
+	int windowWidth = 1000;
+	int windowHeight = 800;
+
+	//Wraps the object from the left side to the right side
+	if (position->x < -2.5) {
+		position->x = windowWidth - 3.0f;
+	}
+	//Wraps the object from the left side to the right side
+	if (position->x > windowWidth) {
+		position->x = -2.5f;
+	}
+
+	//Wraps the object from the bottom to the top (OpenGL uses Left-Bottom coordinate system)
+	if (position->y < -2.0) {
+		position->y = windowHeight - 5.0f;
+	}
+	//Wraps the object from the top to the bottom (OpenGL uses Left-Bottom coordinate system)
+	if (position->y > windowHeight - 5.0f) {
+		position->y = -2.0f;
+	}
+
+	//Adjust both the colliders position and the GameObjects position
+	collider->SetXPos(collider->GetXPos() + velocity.x);
+	collider->SetYPos(collider->GetYPos() + velocity.y);
+
 	//Adjusts the graphical position
-	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x * deltaTime, velocity.y * deltaTime, 0));
+	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
