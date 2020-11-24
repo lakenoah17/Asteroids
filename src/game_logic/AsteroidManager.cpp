@@ -49,17 +49,17 @@ void AsteroidManager::GenerateAsteroids(unsigned int level)
 	s_NumOfAsteroids = 5 + (level * 5);
 	for (int i = 0; i < s_NumOfAsteroids; i++)
 	{
-		float xPos = (rand() - 5) * screenWidth;
+		float xPos = ((((float)rand()) / RAND_MAX) * screenWidth ) - 5;
 		float yPos;
 		if (xPos < -3 || xPos > screenWidth + 3)
 		{
-			yPos = (rand() - 5) * screenHeight;
+			yPos = ((((float)rand()) / RAND_MAX) * screenHeight) - 10;
 		}
 		else
 		{
-			yPos = rand() >= .5f ? -4 : screenHeight + 4;
+			yPos = (((float)rand()) / RAND_MAX) >= .5f ? -4 : screenHeight - 10;
 		}
-		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos,yPos), glm::vec2(2.5f), AsteroidSize::SMALL, 1, 10.0f);
+		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos, yPos), glm::vec2(2.5f), AsteroidSize::SMALL, yPos < (screenHeight / 2.0f) ? 1 : -1, 10.0f);
 	}
 }
 

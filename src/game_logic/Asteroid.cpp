@@ -79,6 +79,9 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 		9, 0
 	};
 
+	this->velocity.x *= cos(rotation);
+	this->velocity.y *= sin(rotation);
+
 	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
