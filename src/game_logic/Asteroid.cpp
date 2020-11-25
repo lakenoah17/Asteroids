@@ -97,33 +97,45 @@ void Asteroid::Update(float deltaTime)
 {
 	*position += velocity * deltaTime;
 
-	int windowWidth = 1000;
+	int windowWidth = 1080;
 	int windowHeight = 800;
 
+	//Adjust both the colliders position and the GameObjects position
+	collider->SetXPos(position->x);
+	collider->SetYPos(position->y);
+
+	//Adjusts the graphical position
+	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x * deltaTime, velocity.y * deltaTime, 0));
+	
+	bool wrapScreen = false;
 	//Wraps the object from the left side to the right side
 	if (position->x < -2.5) {
 		position->x = windowWidth - 3.0f;
+		wrapScreen = true;
 	}
 	//Wraps the object from the left side to the right side
 	if (position->x > windowWidth) {
 		position->x = -2.5f;
+		wrapScreen = true;
 	}
 
 	//Wraps the object from the bottom to the top (OpenGL uses Left-Bottom coordinate system)
 	if (position->y < -2.0) {
 		position->y = windowHeight - 5.0f;
+		wrapScreen = true;
 	}
 	//Wraps the object from the top to the bottom (OpenGL uses Left-Bottom coordinate system)
 	if (position->y > windowHeight - 5.0f) {
 		position->y = -2.0f;
+		wrapScreen = true;
 	}
 
-	//Adjust both the colliders position and the GameObjects position
-	collider->SetXPos(collider->GetXPos() + velocity.x);
-	collider->SetYPos(collider->GetYPos() + velocity.y);
+	if (wrapScreen) {
+		collider->SetXPos(position->x);
+		collider->SetYPos(position->y);
+		renderData->model = glm::translate(renderData->model, glm::vec3(-1080 + position->x, 800 + position->y, 0));
+	}
 
-	//Adjusts the graphical position
-	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x, velocity.y, 0));
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 

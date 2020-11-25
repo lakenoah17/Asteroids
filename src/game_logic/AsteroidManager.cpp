@@ -59,7 +59,9 @@ void AsteroidManager::GenerateAsteroids(unsigned int level)
 		{
 			yPos = (((float)rand()) / RAND_MAX) >= .5f ? -4 : screenHeight - 10;
 		}
-		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos, yPos), glm::vec2(2.5f), AsteroidSize::SMALL, yPos < (screenHeight / 2.0f) ? 1 : -1, 10.0f);
+
+		float rotation = ((((float)rand()) / RAND_MAX) * 2 * glm::pi<float>());
+		s_ActiveAsteroids[i] = new Asteroid(&glm::vec2(xPos, yPos), glm::vec2(10.0f), AsteroidSize::SMALL, rotation, 10.0f);
 	}
 }
 
