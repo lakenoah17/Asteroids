@@ -51,38 +51,200 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 	//Creates Collider and initializes position of GameObject from the values passed in
 	collider = new Collider(position->x - 50, position->y + 50, 100, 100);
 
-	verticies = new float[40]
-	{
-		 0.0f,  10.0f, 0.0f, 0.0f,
-	   -20.0f,  35.0f, 1.0f, 0.0f,
-	   -50.0f,  20.0f, 1.0f, 1.0f,
-	   -35.0f,   0.0f, 0.0f, 1.0f,
-	   -50.0f, -20.0f, 0.0f, 0.0f,
-	   -20.0f, -50.0f, 1.0f, 0.0f,
-		20.0f, -30.0f, 1.0f, 1.0f,
-		20.0f, -20.0f, 0.0f, 1.0f,
-		50.0f,   0.0f, 0.0f, 0.0f,
-		20.0f,  50.0f, 1.0f, 0.0f
-	};
+	float randNum = rand() / (float)RAND_MAX;
 
-	//Basic rect index array
-	indicies = new unsigned int[20]{
-		0, 1,
-		1, 2,
-		2, 3,
-		3, 4,
-		4, 5,
-		5, 6,
-		6, 7,
-		7, 8,
-		8, 9,
-		9, 0
-	};
+	switch (size)
+	{
+	case AsteroidSize::SMALL:
+		if (randNum > .5f)
+		{
+			verticies = new float[24]
+			{
+				 0.0f,   7.5f, 0.0f, 0.0f,
+			   -10.0f,  12.5f, 1.0f, 0.0f,
+			   -12.5f,   0.0f, 1.0f, 1.0f,
+			    -7.5f, -10.0f, 0.0f, 1.0f,
+			     5.0f, -12.5f, 0.0f, 0.0f,
+			    12.5f,  10.0f, 1.0f, 0.0f
+			};
+		}
+		else
+		{
+			verticies = new float[24]
+			{
+				 0.0f,  12.5f, 0.0f, 0.0f,
+			   -12.5f,  10.5f, 1.0f, 0.0f,
+			   -10.5f,   5.0f, 1.0f, 1.0f,
+				-5.0f, -12.5f, 0.0f, 1.0f,
+				 7.5f,   0.0f, 0.0f, 0.0f,
+				12.5f,  10.0f, 1.0f, 0.0f
+			};
+		}
+
+		//Indicies of a small asteroid
+		indicies = new unsigned int[12]{
+			0, 1,
+			1, 2,
+			2, 3,
+			3, 4,
+			4, 5,
+			5, 0
+		};
+
+		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 24, 4, indicies, 12);
+		break;
+	case AsteroidSize::MEDIUM:
+		if (randNum > .5f)
+		{
+			verticies = new float[32]
+			{
+				 0.0f,  10.0f, 0.0f, 0.0f,
+			   -20.0f,  35.0f, 1.0f, 0.0f,
+			   -50.0f,  20.0f, 1.0f, 1.0f,
+			   -35.0f,   0.0f, 0.0f, 1.0f,
+			   -50.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				20.0f, -20.0f, 0.0f, 1.0f
+			};
+		}
+		else
+		{
+			verticies = new float[32]
+			{
+				 0.0f,  25.0f, 0.0f, 0.0f,
+			   -15.0f,  40.0f, 1.0f, 0.0f,
+			   -50.0f,  25.0f, 1.0f, 1.0f,
+			   -50.0f,   0.0f, 0.0f, 1.0f,
+			   -35.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				40.0f, -40.0f, 0.0f, 1.0f
+			};
+		}
+
+		//Indicies of a large asteroid
+		indicies = new unsigned int[16]{
+			0, 1,
+			1, 2,
+			2, 3,
+			3, 4,
+			4, 5,
+			5, 6,
+			6, 7,
+			7, 0
+		};
+
+		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 32, 4, indicies, 16);
+		break;
+	case AsteroidSize::LARGE:
+		if (randNum > .5f)
+		{
+			verticies = new float[40]
+			{
+				 0.0f,  10.0f, 0.0f, 0.0f,
+			   -20.0f,  35.0f, 1.0f, 0.0f,
+			   -50.0f,  20.0f, 1.0f, 1.0f,
+			   -35.0f,   0.0f, 0.0f, 1.0f,
+			   -50.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				20.0f, -20.0f, 0.0f, 1.0f,
+				50.0f,   0.0f, 0.0f, 0.0f,
+				20.0f,  50.0f, 1.0f, 0.0f
+			};
+		}
+		else
+		{
+			verticies = new float[40]
+			{
+				 0.0f,  25.0f, 0.0f, 0.0f,
+			   -15.0f,  40.0f, 1.0f, 0.0f,
+			   -50.0f,  25.0f, 1.0f, 1.0f,
+			   -50.0f,   0.0f, 0.0f, 1.0f,
+			   -35.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				40.0f, -40.0f, 0.0f, 1.0f,
+				50.0f,   0.0f, 0.0f, 0.0f,
+				15.0f,  50.0f, 1.0f, 0.0f
+			};
+		}
+
+		//Indicies of a large asteroid
+		indicies = new unsigned int[20]{
+			0, 1,
+			1, 2,
+			2, 3,
+			3, 4,
+			4, 5,
+			5, 6,
+			6, 7,
+			7, 8,
+			8, 9,
+			9, 0
+		};
+
+		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+		break;
+	case AsteroidSize::XLARGE:
+		if (randNum > .5f)
+		{
+			verticies = new float[40]
+			{
+				 0.0f,  10.0f, 0.0f, 0.0f,
+			   -20.0f,  35.0f, 1.0f, 0.0f,
+			   -50.0f,  20.0f, 1.0f, 1.0f,
+			   -35.0f,   0.0f, 0.0f, 1.0f,
+			   -50.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				20.0f, -20.0f, 0.0f, 1.0f,
+				50.0f,   0.0f, 0.0f, 0.0f,
+				20.0f,  50.0f, 1.0f, 0.0f
+			};
+		}
+		else
+		{
+			verticies = new float[40]
+			{
+				 0.0f,  25.0f, 0.0f, 0.0f,
+			   -15.0f,  40.0f, 1.0f, 0.0f,
+			   -50.0f,  25.0f, 1.0f, 1.0f,
+			   -50.0f,   0.0f, 0.0f, 1.0f,
+			   -35.0f, -20.0f, 0.0f, 0.0f,
+			   -20.0f, -50.0f, 1.0f, 0.0f,
+				20.0f, -30.0f, 1.0f, 1.0f,
+				40.0f, -40.0f, 0.0f, 1.0f,
+				50.0f,   0.0f, 0.0f, 0.0f,
+				15.0f,  50.0f, 1.0f, 0.0f
+			};
+		}
+
+		//Indicies of a large asteroid
+		indicies = new unsigned int[20]{
+			0, 1,
+			1, 2,
+			2, 3,
+			3, 4,
+			4, 5,
+			5, 6,
+			6, 7,
+			7, 8,
+			8, 9,
+			9, 0
+		};
+
+		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+		break;
+	default:
+		break;
+	}
 
 	this->velocity.x *= cos(rotation);
 	this->velocity.y *= sin(rotation);
 
-	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+	
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position-> y, 0));
