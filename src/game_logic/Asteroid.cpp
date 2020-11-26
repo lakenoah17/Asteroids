@@ -4,7 +4,7 @@ Asteroid::Asteroid()
 {
 	//Creates Collider and initializes position of GameObject from the values passed in
 	position = new glm::vec2(120, 120);
-	collider = new Collider(position->x - 12.5, position->y + 12.5, 25, 25);
+	collider = new Collider(position->x - 50, position->y + 50, 100, 100);
 
 	verticies = new float[40]
 	{
@@ -49,7 +49,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 {
 	position = thisPosition;
 	//Creates Collider and initializes position of GameObject from the values passed in
-	collider = new Collider(position->x - 25, position->y + 25, 50, 50);
+	collider = new Collider(position->x - 50, position->y + 50, 100, 100);
 
 	verticies = new float[40]
 	{
@@ -109,24 +109,24 @@ void Asteroid::Update(float deltaTime)
 	
 	bool wrapScreen = false;
 	//Wraps the object from the left side to the right side
-	if (position->x < -2.5) {
-		position->x = windowWidth - 3.0f;
+	if (position->x < -50) {
+		position->x = windowWidth + 50;
 		wrapScreen = true;
 	}
 	//Wraps the object from the left side to the right side
-	if (position->x > windowWidth) {
-		position->x = -2.5f;
+	if (position->x > windowWidth + 50) {
+		position->x = -50;
 		wrapScreen = true;
 	}
 
 	//Wraps the object from the bottom to the top (OpenGL uses Left-Bottom coordinate system)
-	if (position->y < -2.0) {
-		position->y = windowHeight - 5.0f;
+	if (position->y < -50) {
+		position->y = windowHeight + 50;
 		wrapScreen = true;
 	}
 	//Wraps the object from the top to the bottom (OpenGL uses Left-Bottom coordinate system)
-	if (position->y > windowHeight - 5.0f) {
-		position->y = -2.0f;
+	if (position->y > windowHeight + 50) {
+		position->y = -50;
 		wrapScreen = true;
 	}
 
