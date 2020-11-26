@@ -133,7 +133,7 @@ void Asteroid::Update(float deltaTime)
 	if (wrapScreen) {
 		collider->SetXPos(position->x);
 		collider->SetYPos(position->y);
-		renderData->model = glm::translate(renderData->model, glm::vec3(-1080 + position->x, 800 + position->y, 0));
+		renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
 	}
 
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
