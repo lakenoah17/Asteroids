@@ -29,4 +29,5 @@ public:
 	virtual void Draw();
 
 	glm::vec2* GetPosition() { return position; }
+	Collider* GetCollider() { return collider; }
 };

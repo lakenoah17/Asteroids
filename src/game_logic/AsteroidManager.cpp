@@ -20,6 +20,8 @@ void AsteroidManager::UpdateAsteroids(float deltaTime)
 	{
 		s_ActiveAsteroids[i]->Update(deltaTime);
 	}
+
+
 }
 
 void AsteroidManager::DrawAsteroids()
@@ -28,16 +30,6 @@ void AsteroidManager::DrawAsteroids()
 	{
 		s_ActiveAsteroids[i]->Draw();
 	}
-}
-
-void AsteroidManager::BreakAsteroid()
-{
-}
-
-//Possibly unneeded
-void AsteroidManager::UpdateAsteroidCount(unsigned int numAsteroids)
-{
-
 }
 
 void AsteroidManager::GenerateAsteroids(unsigned int level)
@@ -61,7 +53,7 @@ void AsteroidManager::GenerateAsteroids(unsigned int level)
 		}
 
 		float rotation = ((((float)rand()) / RAND_MAX) * 2 * glm::pi<float>());
-		s_ActiveAsteroids[i] = new Asteroid(new glm::vec2(xPos, yPos), glm::vec2(40.0f), AsteroidSize::SMALL, rotation, 10.0f);
+		s_ActiveAsteroids[i] = new Asteroid(new glm::vec2(xPos, yPos), glm::vec2(40.0f), AsteroidSize::MEDIUM, rotation, 10.0f);
 	}
 }
 
