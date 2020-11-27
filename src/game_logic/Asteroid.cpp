@@ -269,8 +269,8 @@ void Asteroid::Update(float deltaTime)
 	int windowHeight = 800;
 
 	//Adjust both the colliders position and the GameObjects position
-	collider->SetXPos(position->x);
-	collider->SetYPos(position->y);
+	collider->SetXPos(collider->GetXPos() - velocity.x * deltaTime);
+	collider->SetYPos(collider->GetYPos() - velocity.y * deltaTime);
 
 	//Adjusts the graphical position
 	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x * deltaTime, velocity.y * deltaTime, 0));

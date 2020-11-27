@@ -3,7 +3,17 @@
 
 class ProjectileManager
 {
+private:
+	static const unsigned int MAX_NUMBER_OF_PROJECTILES = 10;
+	static unsigned int s_NumOfProjectiles;
+	static GLFWwindow* currWindow;
+
+	void ShiftProjectile(unsigned int projectileIndex);
+	bool CheckProjectileStatus(Projectile* projectile, int screenWidth, int screenHeight);
+
 public:
+	static Projectile* s_ActiveProjectiles[MAX_NUMBER_OF_PROJECTILES];
+
 	ProjectileManager(GLFWwindow* currWindow);
 	~ProjectileManager();
 
@@ -12,12 +22,5 @@ public:
 	void UpdateProjectiles(float deltaTime);
 	void DrawProjectiles();
 
-private:
-	static const unsigned int MAX_NUMBER_OF_PROJECTILES = 10;
-	static unsigned int s_NumOfProjectiles;
-	static Projectile* s_ActiveProjectiles[MAX_NUMBER_OF_PROJECTILES];
-	static GLFWwindow* currWindow;
-
-	void ShiftProjectile(unsigned int projectileIndex);
-	bool CheckProjectileStatus(Projectile* projectile, int screenWidth, int screenHeight);
+	int GetNumOfProjectiles() { return s_NumOfProjectiles; }
 };

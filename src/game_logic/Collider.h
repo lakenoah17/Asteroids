@@ -11,7 +11,7 @@ public:
 	Collider(float x, float y, float width, float height);
 	~Collider();
 
-	bool CheckForCollision(Collider& otherCollider);
+	bool CheckForCollision(Collider* otherCollider);
 
 
 	/////////////////////////////////////////////////////////
@@ -30,5 +30,5 @@ public:
 	float GetHeight() { return rect[3]; }
 	void SetHeight(float value) { rect[3] = value; }
 
-	glm::vec4* GetRect() { return &rect; }
+	glm::vec4 GetRect() { return rect; }
 };

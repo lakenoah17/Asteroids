@@ -7,8 +7,8 @@
 /// <param name="position">A pointer to the position vector of the parent</param>
 /// <param name="colliderRect">A pointer to the collider rectangle of the parent</param>
 /// <param name="rotation">A reference to the rotation (in radians) of the parent</param>
-Controller::Controller(glm::vec2* position, glm::vec4* colliderRect, float& rotation)
-	:parentPosition(position), parentColliderRect(colliderRect), parentRotation(&rotation)
+Controller::Controller(glm::vec2* position, glm::vec4 colliderRect, float& rotation)
+	:parentPosition(position), parentColliderRect(&colliderRect), parentRotation(&rotation)
 {
 	velocity = glm::vec2(0, 0);
 	acceleration = glm::vec2(0, 0);

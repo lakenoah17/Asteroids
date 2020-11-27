@@ -31,6 +31,15 @@ void ProjectileManager::UpdateProjectiles(float deltaTime)
 
 	for (int i = 0; i < s_NumOfProjectiles; i++)
 	{
+		if (s_ActiveProjectiles[i] == nullptr)
+		{
+			for (int j = 0; j < s_NumOfProjectiles; j++)
+			{
+				ShiftProjectile(j);
+			}
+
+			s_NumOfProjectiles--;
+		}
 		s_ActiveProjectiles[i]->Update(deltaTime);
 
 		if (!CheckProjectileStatus(s_ActiveProjectiles[i], screenWidth, screenHeight))
@@ -61,7 +70,7 @@ void ProjectileManager::DrawProjectiles()
 /// </summary>
 void ProjectileManager::ShiftProjectile(unsigned int projectileIndex)
 {
-	if (this != nullptr && projectileIndex != 0)
+	while (this != nullptr && projectileIndex != 0)
 	{
 		s_ActiveProjectiles[projectileIndex - 1] = s_ActiveProjectiles[projectileIndex];
 		s_ActiveProjectiles[projectileIndex] = NULL;

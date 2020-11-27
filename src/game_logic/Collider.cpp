@@ -21,9 +21,9 @@ Collider::~Collider()
 /// </summary>
 /// <param name="otherCollider">A reference to the other objects collider</param>
 /// <returns>Whether the two objects are colliding or not</returns>
-bool Collider::CheckForCollision(Collider& otherCollider)
+bool Collider::CheckForCollision(Collider* otherCollider)
 {
-	glm::vec4 otherRect = *otherCollider.GetRect();
+	glm::vec4 otherRect = otherCollider->GetRect();
 
 	//Checks if the two collide using AABB collision
 	return rect[0] < otherRect[0] + otherRect[2] &&

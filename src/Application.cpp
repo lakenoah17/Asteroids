@@ -88,6 +88,8 @@ int main()
 
         Renderer::Clear();
 
+        am->CheckForCollisions((GameObject**)ProjectileManager::s_ActiveProjectiles, projManager->GetNumOfProjectiles());
+
         projManager->UpdateProjectiles(deltaTime);
         projManager->DrawProjectiles();
 

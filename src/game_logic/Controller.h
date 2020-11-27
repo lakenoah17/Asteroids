@@ -9,7 +9,7 @@ class Controller
 public:
 	static GLFWwindow* currWindow;
 
-	Controller(glm::vec2* position, glm::vec4* colliderRect, float& rotation);
+	Controller(glm::vec2* position, glm::vec4 colliderRect, float& rotation);
 	~Controller();
 
 	void Update(float deltaTime);

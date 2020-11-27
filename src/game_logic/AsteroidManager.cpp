@@ -24,6 +24,27 @@ void AsteroidManager::UpdateAsteroids(float deltaTime)
 
 }
 
+void AsteroidManager::CheckForCollisions(GameObject* objsToCompareAgainst[], int numOfObjs) {
+	for (int i = 0; i < numOfObjs; i++)
+	{
+		for (int j = 0; j < s_NumOfAsteroids; j++)
+		{
+			if (objsToCompareAgainst[i] != nullptr && s_ActiveAsteroids[j]->GetCollider()->CheckForCollision(objsToCompareAgainst[i]->GetCollider())) {
+				std::tuple<Asteroid*, Asteroid*>* newAsts = s_ActiveAsteroids[j]->SplitAsteroid();
+				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<0>(*newAsts);
+				s_NumOfAsteroids++;
+				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<1>(*newAsts);
+
+				delete s_ActiveAsteroids[j];
+
+				ShiftAsteroids();
+
+				delete objsToCompareAgainst[i];
+			}
+		}
+	}
+}
+
 void AsteroidManager::DrawAsteroids()
 {
 	for (int i = 0; i < s_NumOfAsteroids; i++)

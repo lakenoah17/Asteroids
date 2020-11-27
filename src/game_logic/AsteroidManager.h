@@ -10,10 +10,10 @@ public:
 
 	void UpdateAsteroids(float deltaTime);
 	void DrawAsteroids();
-	void BreakAsteroid();
 
-	void UpdateAsteroidCount(unsigned int numOfAsteroids);
 	void GenerateAsteroids(unsigned int level);
+
+	void CheckForCollisions(GameObject* objsToCompareAgainst[], int numOfObjs);
 
 private:
 	static unsigned int s_MAX_NUMBER_OF_ASTEROIDS;
