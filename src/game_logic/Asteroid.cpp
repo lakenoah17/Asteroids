@@ -269,8 +269,8 @@ void Asteroid::Update(float deltaTime)
 	int windowHeight = 800;
 
 	//Adjust both the colliders position and the GameObjects position
-	collider->SetXPos(collider->GetXPos() - velocity.x * deltaTime);
-	collider->SetYPos(collider->GetYPos() - velocity.y * deltaTime);
+	collider->SetXPos(collider->GetXPos() + velocity.x * deltaTime);
+	collider->SetYPos(collider->GetYPos() + velocity.y * deltaTime);
 
 	//Adjusts the graphical position
 	renderData->model = glm::translate(renderData->model, glm::vec3(velocity.x * deltaTime, velocity.y * deltaTime, 0));
@@ -299,8 +299,8 @@ void Asteroid::Update(float deltaTime)
 	}
 
 	if (wrapScreen) {
-		collider->SetXPos(position->x);
-		collider->SetYPos(position->y);
+		collider->SetXPos(position->x - 12.5);
+		collider->SetYPos(position->y + 12.5);
 		renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
 	}
 
@@ -322,5 +322,5 @@ std::tuple<Asteroid*, Asteroid*>* Asteroid::SplitAsteroid()
 	Asteroid* ast1 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation - glm::quarter_pi<float>(), 0);
 	Asteroid* ast2 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation + glm::quarter_pi<float>(), 0);
 
-	return new std::tuple<Asteroid*, Asteroid*>(ast1, ast2);
+	return &std::make_tuple(ast1, ast2);
 }
