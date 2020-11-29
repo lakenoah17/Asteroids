@@ -31,29 +31,31 @@ void ProjectileManager::UpdateProjectiles(float deltaTime)
 
 	for (int i = 0; i < s_NumOfProjectiles; i++)
 	{
-		while (s_ActiveProjectiles[i] == nullptr)
+		while (s_ActiveProjectiles[i] == nullptr && s_NumOfProjectiles)
 		{
+			s_NumOfProjectiles--;
 			for (int j = 1; j < s_NumOfProjectiles; j++)
 			{
 				ShiftProjectile(j);
 			}
-
-			s_NumOfProjectiles--;
 		}
 
-		s_ActiveProjectiles[i]->Update(deltaTime);
-
-		if (!CheckProjectileStatus(s_ActiveProjectiles[i], screenWidth, screenHeight))
+		if (s_NumOfProjectiles)
 		{
-			delete s_ActiveProjectiles[i];
-			s_ActiveProjectiles[i] = NULL;
+			s_ActiveProjectiles[i]->Update(deltaTime);
 
-			s_NumOfProjectiles--;
-			for (int j = i + 1; j < s_NumOfProjectiles + i + 1 && j < MAX_NUMBER_OF_PROJECTILES; j++) {
-				ShiftProjectile(j);
+			if (!CheckProjectileStatus(s_ActiveProjectiles[i], screenWidth, screenHeight))
+			{
+				delete s_ActiveProjectiles[i];
+				s_ActiveProjectiles[i] = NULL;
+
+				s_NumOfProjectiles--;
+				for (int j = i + 1; j < s_NumOfProjectiles + i + 1 && j < MAX_NUMBER_OF_PROJECTILES; j++) {
+					ShiftProjectile(j);
+				}
+
+				i--;
 			}
-			
-			i--;
 		}
 	}
 }

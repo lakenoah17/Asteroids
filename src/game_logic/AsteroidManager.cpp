@@ -30,7 +30,7 @@ void AsteroidManager::CheckForCollisions(GameObject* objsToCompareAgainst[], int
 			if (objsToCompareAgainst[i] && s_ActiveAsteroids[j] && s_ActiveAsteroids[j]->GetCollider()->CheckForCollision(objsToCompareAgainst[i]->GetCollider())) {
 				std::tuple<Asteroid*, Asteroid*>* newAsts = s_ActiveAsteroids[j]->SplitAsteroid();
 				
-				//delete s_ActiveAsteroids[j];
+				delete s_ActiveAsteroids[j];
 
 				ShiftAsteroids();
 				s_NumOfAsteroids--;
@@ -38,11 +38,14 @@ void AsteroidManager::CheckForCollisions(GameObject* objsToCompareAgainst[], int
 				delete objsToCompareAgainst[i];
 				objsToCompareAgainst[i] = nullptr;
 
-				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<0>(*newAsts);
-				s_NumOfAsteroids++;
-				
-				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<1>(*newAsts);
-				s_NumOfAsteroids++;
+				if (newAsts)
+				{
+					s_ActiveAsteroids[s_NumOfAsteroids] = std::get<0>(*newAsts);
+					s_NumOfAsteroids++;
+
+					s_ActiveAsteroids[s_NumOfAsteroids] = std::get<1>(*newAsts);
+					s_NumOfAsteroids++;
+				}
 			}
 		}
 	}
