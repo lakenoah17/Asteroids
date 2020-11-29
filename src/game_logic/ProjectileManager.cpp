@@ -73,7 +73,7 @@ void ProjectileManager::DrawProjectiles()
 /// </summary>
 void ProjectileManager::ShiftProjectile(unsigned int projectileIndex)
 {
-	if (this && projectileIndex != 0 && s_ActiveProjectiles[projectileIndex] && projectileIndex < s_NumOfProjectiles)
+	if (projectileIndex != 0 && s_ActiveProjectiles[projectileIndex] && projectileIndex < s_NumOfProjectiles)
 	{
 		s_ActiveProjectiles[projectileIndex - 1] = s_ActiveProjectiles[projectileIndex];
 		s_ActiveProjectiles[projectileIndex] = nullptr;
