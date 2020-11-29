@@ -17,7 +17,7 @@ public:
 
 	void Update(float deltaTime) override;
 	void Draw() override;
-	std::tuple<Asteroid*, Asteroid*>* SplitAsteroid();
+	std::tuple<Asteroid*, Asteroid*> SplitAsteroid();
 
 private:
 	glm::vec2 velocity;

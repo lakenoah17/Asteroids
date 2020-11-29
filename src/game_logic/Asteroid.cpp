@@ -312,15 +312,17 @@ void Asteroid::Draw() {
 	Renderer::Draw(renderData, GL_LINES);
 }
 
-std::tuple<Asteroid*, Asteroid*>* Asteroid::SplitAsteroid()
+std::tuple<Asteroid*, Asteroid*> Asteroid::SplitAsteroid()
 {
 	if (size == AsteroidSize::SMALL)
 	{
-		return nullptr;
+		return std::make_tuple(nullptr, nullptr);
 	}
 
 	Asteroid* ast1 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation - glm::quarter_pi<float>(), 0);
 	Asteroid* ast2 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation + glm::quarter_pi<float>(), 0);
 
-	return &std::make_tuple(ast1, ast2);
+	std::tuple<Asteroid*, Asteroid*> asts = std::make_tuple(ast1, ast2);
+
+	return asts;
 }
