@@ -39,6 +39,9 @@ void Projectile::Update(float deltaTime)
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
+/// <summary>
+/// Draws the projectile to the screen
+/// </summary>
 void Projectile::Draw()
 {
 	renderData->BindRenderable();

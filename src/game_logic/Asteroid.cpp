@@ -1,5 +1,8 @@
 #include "Asteroid.h"
 
+/// <summary>
+/// Usable but not advised
+/// </summary>
 Asteroid::Asteroid()
 {
 	size = AsteroidSize::LARGE;
@@ -46,13 +49,25 @@ Asteroid::Asteroid()
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
+/// <summary>
+/// Initializes and Asteroid based on the specified parameters
+/// </summary>
+/// <param name="thisPosition">The position to start the asteroid at</param>
+/// <param name="velocity">The velocity the asteroid will travel at</param>
+/// <param name="size">The size of the asteroid to create</param>
+/// <param name="rotation">The angle the asteroid will travel at in world space</param>
+/// <param name="timeToSpawn">The time the asteroid will spawn at (Currently unimplemented)</param>
 Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize size, float rotation, float timeToSpawn)
 	: velocity(velocity), size(size), rotation(rotation), timeToSpawn(timeToSpawn)
 {
+	//Sets this here so parent constructor doesn't have to be called
 	position = thisPosition;
 
+	//Used to decide between 2 types of Asteroidbased on the size.
+	//Random number between 0 and 1
 	float randNum = rand() / (float)RAND_MAX;
 
+	//Changes the way Asteroids generate based on the size specified
 	switch (size)
 	{
 	case AsteroidSize::SMALL:
@@ -60,6 +75,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 		//Creates Collider and initializes position of GameObject from the values passed in
 		collider = new Collider(position->x - 12.5f, position->y + 12.5f, 25, 25);
 
+		//Chooses which set of verticies to use randomly. Can be further changed to add more types of asteroids
 		if (randNum > .5f)
 		{
 			verticies = new float[24]
@@ -101,6 +117,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 		//Creates Collider and initializes position of GameObject from the values passed in
 		collider = new Collider(position->x - 25, position->y + 25, 50, 50);
 
+		//Chooses which set of verticies to use randomly. Can be further changed to add more types of asteroids
 		if (randNum > .5f)
 		{
 			verticies = new float[32]
@@ -145,6 +162,10 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 32, 4, indicies, 16);
 		break;
 	case AsteroidSize::LARGE:
+		//Creates Collider and initializes position of GameObject from the values passed in
+		collider = new Collider(position->x - 50, position->y + 50, 100, 100);
+
+		//Chooses which set of verticies to use randomly. Can be further changed to add more types of asteroids
 		if (randNum > .5f)
 		{
 			verticies = new float[40]
@@ -194,6 +215,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 
 		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 		break;
+	//Currently not fully implemented
 	case AsteroidSize::XLARGE:
 		if (randNum > .5f)
 		{
@@ -261,6 +283,10 @@ Asteroid::~Asteroid()
 {
 }
 
+/// <summary>
+/// Updates the Asteroids position and wraps if necessary
+/// </summary>
+/// <param name="deltaTime">The time since the last frame</param>
 void Asteroid::Update(float deltaTime)
 {
 	*position += velocity * deltaTime;
@@ -298,6 +324,7 @@ void Asteroid::Update(float deltaTime)
 		wrapScreen = true;
 	}
 
+	//Wraps the asteroid to the other side of the screen
 	if (wrapScreen) {
 		collider->SetXPos(position->x - 12.5);
 		collider->SetYPos(position->y + 12.5);
@@ -307,18 +334,27 @@ void Asteroid::Update(float deltaTime)
 	renderData->mvp = renderData->proj * renderData->view * renderData->model;
 }
 
+/// <summary>
+/// Draws the asteroid to the screen
+/// </summary>
 void Asteroid::Draw() {
 	renderData->BindRenderable();
 	Renderer::Draw(renderData, GL_LINES);
 }
 
+/// <summary>
+/// Splits the Asteroid into 2 new ones of 1 size smaller
+/// </summary>
+/// <returns>A tuple with two new asteroids each one size smaller than the one they came from</returns>
 std::tuple<Asteroid*, Asteroid*> Asteroid::SplitAsteroid()
 {
+	//If the asteroid is a small Asteroid it can't be split further
 	if (size == AsteroidSize::SMALL)
 	{
 		return std::make_tuple(nullptr, nullptr);
 	}
 
+	//creates the new Asteroids with the same position and velocity as the parent. Rotation is offset by 45 degrees or quarter pi radians
 	Asteroid* ast1 = new Asteroid(new glm::vec2(position->x, position->y), velocity, (AsteroidSize)((int)size - 1), rotation - glm::quarter_pi<float>(), 0);
 	Asteroid* ast2 = new Asteroid(new glm::vec2(position->x, position->y), velocity, (AsteroidSize)((int)size - 1), rotation + glm::quarter_pi<float>(), 0);
 

@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+/// <summary>
+/// Enum used for storing all of the possible sizes of an asteroid
+/// </summary>
 enum class AsteroidSize {
     SMALL = 0,
     MEDIUM = 1,
