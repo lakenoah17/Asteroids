@@ -69,14 +69,12 @@ int main()
     ProjectileManager* projManager = new ProjectileManager(window);
 
     AsteroidManager* am = new AsteroidManager(window);
-    am->GenerateAsteroids(10);
+    am->GenerateAsteroids(1);
 
     Player* player = new Player();
 
     float oldTime = clock();
     float deltaTime = 0.0f;
-
-    Asteroid asteroid;
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
@@ -90,17 +88,23 @@ int main()
 
         am->CheckForCollisions((GameObject**)ProjectileManager::s_ActiveProjectiles, projManager->GetNumOfProjectiles());
 
+        //Checks for collision between player and asteroids
+        if (am->CheckForCollision(player))
+        {
+            player = nullptr;
+        }
+
         projManager->UpdateProjectiles(deltaTime);
         projManager->DrawProjectiles();
-
-        asteroid.Update(deltaTime);
-        asteroid.Draw();
 
         am->UpdateAsteroids(deltaTime);
         am->DrawAsteroids();
         
-        player->Update(deltaTime);
-        player->Draw();
+        if (player)
+        {
+            player->Update(deltaTime);
+            player->Draw();
+        }
 
         GLCall(glfwSwapBuffers(window));
 
@@ -111,8 +115,12 @@ int main()
             s_GameState = -1;
         }
     }
-    delete player;
 
+    if (player)
+    {
+        delete player;
+    }
+    
     glfwTerminate();
     return 0;
 }

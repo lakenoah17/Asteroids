@@ -13,6 +13,7 @@ public:
 
 	void GenerateAsteroids(unsigned int level);
 
+	bool CheckForCollision(GameObject* objToCompareAgainst);
 	void CheckForCollisions(GameObject* objsToCompareAgainst[], int numOfObjs);
 
 private:

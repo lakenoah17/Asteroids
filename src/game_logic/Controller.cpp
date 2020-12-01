@@ -82,8 +82,6 @@ void Controller::Update(float deltaTime)
 	velocity += acceleration;
 	*parentPosition += velocity;
 
-	parentColliderRect->x += velocity.x;
-	parentColliderRect->y += velocity.y;
 	#pragma endregion
 
 	#pragma region Screen Wrapping

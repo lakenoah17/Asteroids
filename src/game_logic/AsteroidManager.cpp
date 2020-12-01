@@ -31,6 +31,44 @@ void AsteroidManager::UpdateAsteroids(float deltaTime)
 }
 
 /// <summary>
+/// Checks for collision between the Asteroids and a GameObject
+/// </summary>
+/// <param name="objToCompareAgainst">Object to check for collission with</param>
+/// <returns>Whether there was a collision or not</returns>
+bool AsteroidManager::CheckForCollision(GameObject* objToCompareAgainst) {
+	for (int i = 0; i < s_NumOfAsteroids; i++)
+	{
+		//Checks if the two objects are valid then checks if they are colliding
+		if (objToCompareAgainst && s_ActiveAsteroids[i] && s_ActiveAsteroids[i]->GetCollider()->CheckForCollision(objToCompareAgainst->GetCollider())) {
+
+			std::tuple<Asteroid*, Asteroid*> newAsts = s_ActiveAsteroids[i]->SplitAsteroid();
+
+			//Checks to see if the tuple returned is valid
+			if (std::get<0>(newAsts))
+			{
+				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<0>(newAsts);
+				s_NumOfAsteroids++;
+
+				s_ActiveAsteroids[s_NumOfAsteroids] = std::get<1>(newAsts);
+				s_NumOfAsteroids++;
+			}
+
+			delete s_ActiveAsteroids[i];
+			s_ActiveAsteroids[i] = nullptr;
+
+			ShiftAsteroids();
+			s_NumOfAsteroids--;
+
+			delete objToCompareAgainst;
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/// <summary>
 /// Checks for collisions between the Asteroids and an array of GameObjects
 /// </summary>
 /// <param name="objsToCompareAgainst">Objects to check for collission with</param>

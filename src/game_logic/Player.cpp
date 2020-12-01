@@ -41,6 +41,9 @@ Player::Player()
 void Player::Update(float deltaTime) {
 	controls->Update(deltaTime);
 
+	collider->SetXPos(position->x - 12.5f);
+	collider->SetYPos(position->y + 12.5f);
+
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
 	renderData->model = glm::rotate(renderData->model, rotation - glm::half_pi<float>(), glm::vec3(0, 0, 1));
