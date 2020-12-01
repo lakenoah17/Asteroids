@@ -319,8 +319,8 @@ std::tuple<Asteroid*, Asteroid*> Asteroid::SplitAsteroid()
 		return std::make_tuple(nullptr, nullptr);
 	}
 
-	Asteroid* ast1 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation - glm::quarter_pi<float>(), 0);
-	Asteroid* ast2 = new Asteroid(position, velocity, (AsteroidSize)((int)size - 1), rotation + glm::quarter_pi<float>(), 0);
+	Asteroid* ast1 = new Asteroid(new glm::vec2(position->x, position->y), velocity, (AsteroidSize)((int)size - 1), rotation - glm::quarter_pi<float>(), 0);
+	Asteroid* ast2 = new Asteroid(new glm::vec2(position->x, position->y), velocity, (AsteroidSize)((int)size - 1), rotation + glm::quarter_pi<float>(), 0);
 
 	std::tuple<Asteroid*, Asteroid*> asts = std::make_tuple(ast1, ast2);
 

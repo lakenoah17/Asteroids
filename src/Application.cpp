@@ -80,7 +80,6 @@ int main()
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
-        std::cout << projManager->GetNumOfProjectiles() << std::endl;
         //Calculates the deltaTime between loops
         float newTime = clock();
         //Changes deltaTime to be in seconds

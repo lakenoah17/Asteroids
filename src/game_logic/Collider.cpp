@@ -28,6 +28,6 @@ bool Collider::CheckForCollision(Collider* otherCollider)
 	//Checks if the two collide using AABB collision
 	return rect[0] < otherRect[0] + otherRect[2] &&
 		   otherRect[0] < rect[0] + rect[2] &&
-		   rect[1] < otherRect[1] + otherRect[3] &&
-		   otherRect[1] < rect[1] + rect[3];
+		   rect[1] > otherRect[1] - otherRect[3] &&
+		   otherRect[1] > rect[1] - rect[3];
 }
