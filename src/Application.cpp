@@ -64,12 +64,13 @@ int main()
 
     #pragma endregion
 
+    int levelNum = 1;
     Controller::currWindow = window;
 
     ProjectileManager* projManager = new ProjectileManager(window);
 
     AsteroidManager* am = new AsteroidManager(window);
-    am->GenerateAsteroids(1);
+    am->GenerateAsteroids(levelNum);
 
     Player* player = new Player();
 
@@ -104,6 +105,12 @@ int main()
         {
             player->Update(deltaTime);
             player->Draw();
+        }
+
+        if (am->GetNumOfAsteroids() == 0)
+        {
+            levelNum++;
+            am->GenerateAsteroids(levelNum);
         }
 
         GLCall(glfwSwapBuffers(window));

@@ -16,6 +16,8 @@ public:
 	bool CheckForCollision(GameObject* objToCompareAgainst);
 	void CheckForCollisions(GameObject* objsToCompareAgainst[], int numOfObjs);
 
+	unsigned int GetNumOfAsteroids() { return s_NumOfAsteroids; }
+
 private:
 	static unsigned int s_MAX_NUMBER_OF_ASTEROIDS;
 	static Asteroid* s_ActiveAsteroids[100];

@@ -148,7 +148,12 @@ void AsteroidManager::GenerateAsteroids(unsigned int level)
 
 		//Rotation is randomized as well
 		float rotation = ((((float)rand()) / RAND_MAX) * 2 * glm::pi<float>());
-		s_ActiveAsteroids[i] = new Asteroid(new glm::vec2(xPos, yPos), glm::vec2(40.0f), AsteroidSize::MEDIUM, rotation, 10.0f);
+
+		float speed = (((float)rand()) / RAND_MAX) * 20 + 40;
+
+		int size = (((float)rand()) / RAND_MAX) * 2;
+
+		s_ActiveAsteroids[i] = new Asteroid(new glm::vec2(xPos, yPos), glm::vec2(speed), (AsteroidSize)size, rotation, 10.0f);
 	}
 }
 
