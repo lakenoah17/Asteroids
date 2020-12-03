@@ -76,43 +76,81 @@ int main()
 
     float oldTime = clock();
     float deltaTime = 0.0f;
+    float newTime;
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
-        //Calculates the deltaTime between loops
-        float newTime = clock();
-        //Changes deltaTime to be in seconds
-        deltaTime = (newTime - oldTime) / 1000;
-        oldTime = newTime;
-
         Renderer::Clear();
 
-        am->CheckForCollisions((GameObject**)ProjectileManager::s_ActiveProjectiles, projManager->GetNumOfProjectiles());
-
-        //Checks for collision between player and asteroids
-        if (am->CheckForCollision(player))
+        switch (s_GameState)
         {
-            player = nullptr;
+        case -1:
+            break;
+
+        case 0:
+        #pragma region MenuState
+            if (glfwGetKey(window, GLFW_KEY_ENTER))
+            {
+                s_GameState = 1;
+            }
+            break;
+        #pragma endregion
+
+        case 1:
+        #pragma region GameState
+            //Calculates the deltaTime between loops
+            newTime = clock();
+            //Changes deltaTime to be in seconds
+            deltaTime = (newTime - oldTime) / 1000;
+            oldTime = newTime;
+
+            am->CheckForCollisions((GameObject**)ProjectileManager::s_ActiveProjectiles, projManager->GetNumOfProjectiles());
+
+            if (player)
+            {
+                player->Update(deltaTime);
+                player->Draw();
+            }
+            else
+            {
+                s_GameState = 2;
+                continue;
+            }
+
+            //Checks for collision between player and asteroids
+            if (am->CheckForCollision(player))
+            {
+                player = nullptr;
+            }
+
+            projManager->UpdateProjectiles(deltaTime);
+            projManager->DrawProjectiles();
+
+            am->UpdateAsteroids(deltaTime);
+            am->DrawAsteroids();
+
+            if (am->GetNumOfAsteroids() == 0)
+            {
+                levelNum++;
+                am->GenerateAsteroids(levelNum);
+            }
+
+            break;
+        #pragma endregion
+
+        case 2:
+        #pragma region GameOverState
+            if (glfwGetKey(window, GLFW_KEY_ENTER))
+            {
+                s_GameState = 0;
+            }
+            break;
+        #pragma endregion
+
+        default:
+            break;
         }
-
-        projManager->UpdateProjectiles(deltaTime);
-        projManager->DrawProjectiles();
-
-        am->UpdateAsteroids(deltaTime);
-        am->DrawAsteroids();
         
-        if (player)
-        {
-            player->Update(deltaTime);
-            player->Draw();
-        }
-
-        if (am->GetNumOfAsteroids() == 0)
-        {
-            levelNum++;
-            am->GenerateAsteroids(levelNum);
-        }
-
         GLCall(glfwSwapBuffers(window));
 
         GLCall(glfwPollEvents());
