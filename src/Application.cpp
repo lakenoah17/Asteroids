@@ -1,6 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -28,6 +31,8 @@
 static int s_GameState = 0;
 
 GLFWwindow* Controller::currWindow;
+
+FT_Library library;
 
 int main()
 {
@@ -61,6 +66,38 @@ int main()
 
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     GLCall(glEnable(GL_BLEND));
+
+    #pragma endregion
+
+    #pragma region FreeTypeInit
+    FT_Error error = FT_Init_FreeType(&library);
+    FT_Face fontFace;
+
+    if (error)
+    {
+        std::cout << "An error has occured with the FreeType library"<<std::endl;
+    }
+    
+    error = FT_New_Face(library,
+        "C:/Windows/Fonts/OCRAEXT.ttf",
+        0,
+        &fontFace);
+
+    if (error == FT_Err_Unknown_File_Format)
+    {
+        std::cout << "Font format not supported" << std::endl;
+    }
+    else if (error)
+    {
+        std::cout << "Font broken or can't be read" << std::endl;
+    }
+
+    error = FT_Set_Char_Size(
+        fontFace,    /* handle to face object           */
+        0,       /* char_width in 1/64th of points  */
+        16 * 64,   /* char_height in 1/64th of points */
+        300,     /* horizontal device resolution    */
+        300);
 
     #pragma endregion
 
