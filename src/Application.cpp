@@ -22,6 +22,8 @@
 #include "game_logic/ProjectileManager.h"
 #include "game_logic/AsteroidManager.h"
 
+#include "graphics/TextRenderer.h"
+
 #include <thread>
 
 //-1 = Stop execution
@@ -115,10 +117,12 @@ int main()
     float deltaTime = 0.0f;
     float newTime;
 
+    TextRenderer* text = new TextRenderer(&fontFace);
+
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         Renderer::Clear();
-
+        text->DrawText(20, 20, "Hello", 10);
         switch (s_GameState)
         {
         case -1:
