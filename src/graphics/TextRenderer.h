@@ -23,6 +23,8 @@ public:
 	~TextRenderer();
 
 	void DrawText(int xPos, int yPos, std::string text, int fontSize);
+
+	Character LoadCharacterIntoMemory(char characterToLoad);
 	
 private:
 	FT_Face* fontFace;
