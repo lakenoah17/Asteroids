@@ -35,7 +35,7 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
         //yPos -= (currCharacter.size.y - currCharacter.bearing.y) * scale;
 
         float w = currCharacter.size.x;// * //scale;
-            float h = currCharacter.size.y;// * //scale;
+        float h = currCharacter.size.y;// * //scale;
         // update VBO for each character
         float vertices[6][4] = {
             { xPos,     yPos + h,   0.0f, 0.0f },
@@ -46,6 +46,7 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
             { xPos + w, yPos,       1.0f, 1.0f },
             { xPos + w, yPos + h,   1.0f, 0.0f }
         };
+
         // render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, currCharacter.textureID);
         // update content of VBO memory

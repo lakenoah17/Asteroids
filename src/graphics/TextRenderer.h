@@ -9,11 +9,14 @@
 #include <string>
 #include <map>
 
+#include "VertexBufferLayout.h"
+
 struct Character {
 	unsigned int textureID;
 	glm::ivec2 size;
 	glm::ivec2 bearing;
 	unsigned int advance;
+	VertexBuffer* vb;
 };
 
 class TextRenderer
