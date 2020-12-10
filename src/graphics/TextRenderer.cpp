@@ -34,8 +34,14 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
         xPos += currCharacter.bearing.x * fontSize;
         yPos -= (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
 
-        glBindTexture(GL_TEXTURE_2D, currCharacter.textureID);
-        Renderer::Draw(currCharacter.renderable);
+        //Currently breaks code. Need to look more into texture rendering
+        /*glBindTexture(GL_TEXTURE_2D, currCharacter.textureID);
+
+        currCharacter.renderable->vao->Bind();
+        currCharacter.renderable->ib->Bind();
+        currCharacter.renderable->vb->Bind();*/
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }
 
