@@ -16,7 +16,7 @@ struct Character {
 	glm::ivec2 size;
 	glm::ivec2 bearing;
 	unsigned int advance;
-	VertexBuffer* vb;
+	Renderable* renderable;
 };
 
 class TextRenderer
@@ -27,7 +27,7 @@ public:
 
 	void DrawText(int xPos, int yPos, std::string text, int fontSize);
 
-	Character LoadCharacterIntoMemory(char characterToLoad);
+	Character LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale);
 	
 private:
 	FT_Face* fontFace;

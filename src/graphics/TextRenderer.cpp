@@ -25,43 +25,21 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
         //Loads new characters into the cache
         if (characterCache.find(text[i]) == characterCache.end())
         {
-            currCharacter = LoadCharacterIntoMemory(text[i]);
+            currCharacter = LoadCharacterIntoMemory(text[i], xPos, yPos, fontSize);
         }
         else {
             currCharacter = characterCache[text[i]];
         }
-        
-        //xPos += currCharacter.bearing.x * scale;
-        //yPos -= (currCharacter.size.y - currCharacter.bearing.y) * scale;
 
-        float w = currCharacter.size.x;// * //scale;
-        float h = currCharacter.size.y;// * //scale;
-        // update VBO for each character
-        float vertices[6][4] = {
-            { xPos,     yPos + h,   0.0f, 0.0f },
-            { xPos,     yPos,       0.0f, 1.0f },
-            { xPos + w, yPos,       1.0f, 1.0f },
+        xPos += currCharacter.bearing.x * fontSize;
+        yPos -= (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
 
-            { xPos,     yPos + h,   0.0f, 0.0f },
-            { xPos + w, yPos,       1.0f, 1.0f },
-            { xPos + w, yPos + h,   1.0f, 0.0f }
-        };
-
-        // render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, currCharacter.textureID);
-        // update content of VBO memory
-        //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        // render quad
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
-        //xPos += (currCharacter.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
+        Renderer::Draw(currCharacter.renderable);
     }
 }
 
-Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad) {
+Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale) {
     // generate texture
     unsigned int texture;
     glGenTextures(1, &texture);
@@ -79,7 +57,12 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad) {
     );
 
     // set texture options
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+    //xPos += (currCharacter.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
 
     // now store character for later use
     Character characterToReturn = {
@@ -88,6 +71,25 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad) {
         glm::ivec2((*fontFace)->glyph->bitmap_left, (*fontFace)->glyph->bitmap_top),
         (*fontFace)->glyph->advance.x
     };
+
+    float w = characterToReturn.size.x * scale;
+    float h = characterToReturn.size.y * scale;
+    // update VBO for each character
+    float vertices[24] = {
+        xPos,     yPos + h,   0.0f, 0.0f,
+        xPos,     yPos,       0.0f, 1.0f,
+        xPos + w, yPos,       1.0f, 1.0f,
+        xPos,     yPos + h,   0.0f, 0.0f,
+        xPos + w, yPos,       1.0f, 1.0f,
+        xPos + w, yPos + h,   1.0f, 0.0f,
+    };
+
+    unsigned int* indicies = new unsigned int[6]{
+        2, 1, 0,
+        0, 3, 2
+    };
+
+    characterToReturn.renderable = Renderer::CreateRenderable("res/shaders/Text.shader", vertices, 24, 4, indicies, 6);
 
     characterCache.insert(std::pair<char, Character>(characterToLoad, characterToReturn));
 

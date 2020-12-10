@@ -122,7 +122,9 @@ int main()
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         Renderer::Clear();
-        text->DrawText(20, 20, "Hello", 10);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+        text->DrawText(200, 200, "H", 1);
         switch (s_GameState)
         {
         case -1:
@@ -134,6 +136,7 @@ int main()
             {
                 s_GameState = 1;
             }
+
             break;
         #pragma endregion
 

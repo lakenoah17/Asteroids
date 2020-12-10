@@ -179,6 +179,7 @@
     <None Include="Dependencies\GLEW\doc\wglew.html" />
     <None Include="res\shaders\EmptyGameObject.shader" />
     <None Include="res\shaders\Spaceship.shader" />
+    <None Include="res\shaders\Text.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
