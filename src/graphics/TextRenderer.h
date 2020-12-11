@@ -10,9 +10,10 @@
 #include <map>
 
 #include "VertexBufferLayout.h"
+#include "Texture.h"
 
 struct Character {
-	unsigned int textureID;
+	Texture* texture;
 	glm::ivec2 size;
 	glm::ivec2 bearing;
 	unsigned int advance;

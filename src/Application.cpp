@@ -81,7 +81,7 @@ int main()
     }
     
     error = FT_New_Face(library,
-        "C:/Windows/Fonts/OCRAEXT.ttf",
+        "C:/Windows/Fonts/Arial.ttf",
         0,
         &fontFace);
 
@@ -124,7 +124,7 @@ int main()
         Renderer::Clear();
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        text->DrawText(200, 200, "Hello", 10);
+        text->DrawText(200, 200, "H", 10);
         switch (s_GameState)
         {
         case -1:
@@ -136,7 +136,6 @@ int main()
             {
                 s_GameState = 1;
             }
-            //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             break;
         #pragma endregion
 
