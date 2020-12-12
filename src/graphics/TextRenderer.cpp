@@ -20,15 +20,16 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
 
         Character currCharacter;
 
+        unsigned int index = FT_Get_Char_Index((*fontFace), text[i]);
+
+        if (FT_Load_Glyph((*fontFace), index, FT_LOAD_DEFAULT))
+        {
+            continue;
+        }
+
         //Loads new characters into the cache
         if (characterCache.find(text[i]) == characterCache.end())
         {
-            unsigned int index = FT_Get_Char_Index((*fontFace), 'h');
-            
-            if (FT_Load_Glyph((*fontFace), index, FT_LOAD_DEFAULT))
-            {
-                continue;
-            }
             FT_Render_Glyph((*fontFace)->glyph, FT_RENDER_MODE_NORMAL);
 
             currCharacter = LoadCharacterIntoMemory(text[i], xPos, yPos, fontSize);
@@ -37,8 +38,9 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
             currCharacter = characterCache[text[i]];
         }
 
-        xPos += currCharacter.bearing.x * fontSize;
-        yPos -= (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
+        /* increment pen position */
+        xPos += (*fontFace)->glyph->advance.x >> 6;
+        yPos += (*fontFace)->glyph->advance.y >> 6;
 
         currCharacter.texture->Bind();
 

@@ -122,7 +122,7 @@ int main()
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         Renderer::Clear();
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        
 
         text->DrawText(200, 200, "H", 10);
         switch (s_GameState)
