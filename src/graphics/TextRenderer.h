@@ -26,7 +26,7 @@ public:
 	TextRenderer(FT_Face* face);
 	~TextRenderer();
 
-	void DrawText(int xPos, int yPos, std::string text, int fontSize);
+	void DrawText(int xPos, int yPos, std::string text, float fontSize);
 
 	Character LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale);
 	

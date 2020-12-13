@@ -16,6 +16,13 @@ AsteroidManager::AsteroidManager(GLFWwindow* window)
 
 AsteroidManager::~AsteroidManager()
 {
+	for (Asteroid* ast : s_ActiveAsteroids)
+	{
+		if (ast)
+		{
+			delete ast;
+		}
+	}
 }
 
 /// <summary>

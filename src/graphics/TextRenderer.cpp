@@ -12,7 +12,7 @@ unsigned int TextRenderer::GetCharIndex(char charToFind) {
 	return FT_Get_Char_Index(*fontFace, charToFind);
 }
 
-void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) {
+void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize) {
     for (int i = 0; i < text.length(); i++)
     {
         Character currCharacter;
@@ -21,7 +21,7 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
         FT_Load_Glyph((*fontFace), index, FT_LOAD_DEFAULT);
 
         //Loads new characters into the cache
-        if (characterCache.find(text[i]) == characterCache.end())
+        if (characterCache.find(text[i]) == characterCache.end())   
         {
             FT_Render_Glyph((*fontFace)->glyph, FT_RENDER_MODE_NORMAL);
 

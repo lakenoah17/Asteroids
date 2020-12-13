@@ -127,7 +127,7 @@ int main()
         Renderer::Clear();
         
 
-        text->DrawText(0, 0, "Hello", 5);
+        //text->DrawText(0, 0, "Hello", .5);
         switch (s_GameState)
         {
         case -1:
@@ -190,6 +190,26 @@ int main()
             if (glfwGetKey(window, GLFW_KEY_ENTER))
             {
                 s_GameState = 0;
+
+                levelNum = 1;
+                Controller::currWindow = window;
+
+                delete projManager;
+                delete am;
+                if (player)
+                {
+                    delete player;
+                }
+
+                projManager = new ProjectileManager(window);
+
+                am = new AsteroidManager(window);
+                am->GenerateAsteroids(levelNum);
+
+                player = new Player();
+
+                oldTime = clock();
+                deltaTime = 0.0f;
             }
             break;
         #pragma endregion
