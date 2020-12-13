@@ -15,17 +15,10 @@ unsigned int TextRenderer::GetCharIndex(char charToFind) {
 void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) {
     for (int i = 0; i < text.length(); i++)
     {
-        // load character glyph 
-        std::cout << i << std::endl;
-
         Character currCharacter;
 
         unsigned int index = FT_Get_Char_Index((*fontFace), text[i]);
-
-        if (FT_Load_Glyph((*fontFace), index, FT_LOAD_DEFAULT))
-        {
-            continue;
-        }
+        FT_Load_Glyph((*fontFace), index, FT_LOAD_DEFAULT);
 
         //Loads new characters into the cache
         if (characterCache.find(text[i]) == characterCache.end())
@@ -38,15 +31,21 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
             currCharacter = characterCache[text[i]];
         }
 
-        /* increment pen position */
-        xPos += (*fontFace)->glyph->advance.x >> 6;
-        yPos += (*fontFace)->glyph->advance.y >> 6;
+        currCharacter.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(xPos, yPos, 0));
+        currCharacter.renderable->mvp = currCharacter.renderable->proj * currCharacter.renderable->view * currCharacter.renderable->model;
 
         currCharacter.texture->Bind();
 
         Renderer::Draw(currCharacter.renderable);
 
         currCharacter.texture->UnBind();
+
+        /* increment pen position */
+        xPos += ((*fontFace)->glyph->advance.x >> 6)*fontSize;
+        yPos += ((*fontFace)->glyph->advance.y >> 6)*fontSize;
+
+        // load character glyph 
+        std::cout << i << std::endl;
     }
 }
 
