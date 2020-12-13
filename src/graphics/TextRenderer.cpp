@@ -31,7 +31,10 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
             currCharacter = characterCache[text[i]];
         }
 
-        currCharacter.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(xPos, yPos, 0));
+        float x = xPos + currCharacter.bearing.x * fontSize;
+        float y = yPos - (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
+
+        currCharacter.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
         currCharacter.renderable->mvp = currCharacter.renderable->proj * currCharacter.renderable->view * currCharacter.renderable->model;
 
         currCharacter.texture->Bind();
@@ -40,19 +43,12 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, int fontSize) 
 
         currCharacter.texture->UnBind();
 
-        /* increment pen position */
-        xPos += ((*fontFace)->glyph->advance.x >> 6)*fontSize;
-        yPos += ((*fontFace)->glyph->advance.y >> 6)*fontSize;
-
-        // load character glyph 
-        std::cout << i << std::endl;
+        xPos += (currCharacter.advance>>6) * fontSize;
     }
 }
 
 Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale) {
-    //xPos += (currCharacter.advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64)
-
-    // now store character for later use
+    // now store character for later use9
     Character characterToReturn = {
         new Texture((*fontFace)->glyph->bitmap.buffer, (*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
         glm::ivec2((*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
@@ -62,6 +58,7 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos
 
     float w = characterToReturn.size.x * scale;
     float h = characterToReturn.size.y * scale;
+
     // update VBO for each character
     float vertices[16] = {
         xPos,     yPos + h,   0.0f, 0.0f,
@@ -76,6 +73,7 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos
     };
 
     characterToReturn.renderable = Renderer::CreateRenderable("res/shaders/Text.shader", vertices, 16, 4, indicies, 6);
+
     characterToReturn.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
     characterToReturn.renderable->mvp = characterToReturn.renderable->proj * characterToReturn.renderable->view * characterToReturn.renderable->model;
 

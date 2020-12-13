@@ -94,11 +94,12 @@ int main()
         std::cout << "Font broken or can't be read" << std::endl;
     }
 
-    error = FT_Set_Pixel_Sizes(
-        fontFace,   /* handle to face object */
-        0,      /* pixel_width           */
-        48);   /* pixel_height          */
-
+    error = FT_Set_Char_Size(
+        fontFace,    /* handle to face object           */
+        0,       /* char_width in 1/64th of points  */
+        16 * 64,   /* char_height in 1/64th of points */
+        300,     /* horizontal device resolution    */
+        300);   /* vertical device resolution      */
     #pragma endregion
 
     int levelNum = 1;
@@ -117,14 +118,16 @@ int main()
 
     TextRenderer* text = new TextRenderer(&fontFace);
 
-   
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
         Renderer::Clear();
         
 
-        text->DrawText(20, 0, "Hello", 5);
+        text->DrawText(0, 0, "Hello", 5);
         switch (s_GameState)
         {
         case -1:
