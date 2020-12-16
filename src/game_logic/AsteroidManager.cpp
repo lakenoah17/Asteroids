@@ -1,7 +1,7 @@
 #include "AsteroidManager.h"
 
 unsigned int AsteroidManager::s_MAX_NUMBER_OF_ASTEROIDS;
-Asteroid* AsteroidManager::s_ActiveAsteroids[100];
+Asteroid* AsteroidManager::s_ActiveAsteroids[10000];
 unsigned int AsteroidManager::s_NumOfAsteroids;
 GLFWwindow* AsteroidManager::currWindow;
 

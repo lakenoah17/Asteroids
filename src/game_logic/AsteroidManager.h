@@ -20,7 +20,7 @@ public:
 
 private:
 	static unsigned int s_MAX_NUMBER_OF_ASTEROIDS;
-	static Asteroid* s_ActiveAsteroids[100];
+	static Asteroid* s_ActiveAsteroids[10000];
 	static unsigned int s_NumOfAsteroids;
 	static GLFWwindow* currWindow;
 	
