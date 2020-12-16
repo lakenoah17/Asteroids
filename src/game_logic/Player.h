@@ -14,4 +14,5 @@ public:
 
 	void Update(float deltaTime) override;
 	void Draw() override;
+	Renderable* GetPlayerRenderable() { return renderData; }
 };

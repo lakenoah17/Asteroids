@@ -117,6 +117,10 @@ int main()
 
     Player* player = new Player();
 
+    int numLives = 3;
+    int score = 0;
+    unsigned int oldNumAsts;
+
     float oldTime = clock();
     float deltaTime = 0.0f;
     float newTime;
@@ -152,13 +156,28 @@ int main()
 
         case 1:
         #pragma region GameState
+
             //Calculates the deltaTime between loops
             newTime = clock();
             //Changes deltaTime to be in seconds
             deltaTime = (newTime - oldTime) / 1000;
             oldTime = newTime;
 
+            oldNumAsts = am->GetNumOfAsteroids();
+
             am->CheckForCollisions((GameObject**)ProjectileManager::s_ActiveProjectiles, projManager->GetNumOfProjectiles());
+
+            //Keeps track of score system
+            if (am->GetNumOfAsteroids() > oldNumAsts)
+            {
+                score += ((oldNumAsts + 2) - am->GetNumOfAsteroids()) * 100;
+            }
+            else if (am->GetNumOfAsteroids() < oldNumAsts)
+            {
+                score += (oldNumAsts - am->GetNumOfAsteroids()) * 100;
+            }
+            
+            text->DrawText(25, windowHeight * 4 - 125, "Score: " + std::to_string(score), .25, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             if (player)
             {
@@ -167,8 +186,23 @@ int main()
             }
             else
             {
-                s_GameState = 2;
+                numLives--;
+
+                if (numLives == -1)
+                {
+                    s_GameState = 2;
+                }
+                else
+                {
+                    player = new Player();
+                }
                 continue;
+            }
+
+            //Draws the visual for lives left to the screen
+            for (int i = 0; i < numLives; i++)
+            {
+                Renderer::Draw(player->GetPlayerRenderable(), GL_LINES, 20 + i * 28, windowHeight - 75);
             }
 
             //Checks for collision between player and asteroids
@@ -219,6 +253,8 @@ int main()
 
                 oldTime = clock();
                 deltaTime = 0.0f;
+
+                score = 0;
             }
             break;
         #pragma endregion

@@ -105,3 +105,16 @@ void Renderer::Draw(Renderable* objToRender, unsigned int drawType) {
     objToRender->shader->SetUniformMat4f("u_MVP", objToRender->mvp);
     GLCall(glDrawElements(drawType, objToRender->ib->GetCount(), GL_UNSIGNED_INT, nullptr));
 }
+
+/// <summary>
+/// Draws to the screen using a Renderable struct and a position
+/// </summary>
+/// <param name="objToRender">The struct to use for rendering</param>
+/// <param name="drawType">The type of drawing OpenGL will use to render the object</param>
+/// <param name="x">The x position to draw this renderable at</param>
+/// <param name="y">The y position to draw this renderable at</param>
+void Renderer::Draw(Renderable* objToRender, unsigned int drawType, float x, float y) {
+    objToRender->BindRenderable();
+    objToRender->shader->SetUniformMat4f("u_MVP", objToRender->proj * objToRender->view * glm::translate(glm::mat4(1.0f), glm::vec3(x,y,0)));
+    GLCall(glDrawElements(drawType, objToRender->ib->GetCount(), GL_UNSIGNED_INT, nullptr));
+}

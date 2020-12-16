@@ -56,6 +56,7 @@ public:
     static void Clear();
     static void Draw(Renderable* objToRender);
     static void Draw(Renderable* objToRender, unsigned int drawType);
+    static void Draw(Renderable* objToRender, unsigned int drawType, float x, float y);
 
 private:
     Renderer();
