@@ -229,6 +229,7 @@ int main()
         case 2:
         #pragma region GameOverState
             text->DrawText(325, 400, "Game Over!", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(1500, 475, "Final Score: " + std::to_string(score), .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             if (glfwGetKey(window, GLFW_KEY_ENTER))
             {

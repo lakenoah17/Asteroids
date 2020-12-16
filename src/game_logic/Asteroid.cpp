@@ -163,7 +163,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 		break;
 	case AsteroidSize::LARGE:
 		//Creates Collider and initializes position of GameObject from the values passed in
-		collider = new Collider(position->x - 50, position->y + 50, 100, 100);
+		collider = new Collider(position->x - 60, position->y + 60, 100, 100);
 
 		//Chooses which set of verticies to use randomly. Can be further changed to add more types of asteroids
 		if (randNum > .5f)
