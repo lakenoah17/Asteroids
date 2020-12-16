@@ -12,7 +12,7 @@ unsigned int TextRenderer::GetCharIndex(char charToFind) {
 	return FT_Get_Char_Index(*fontFace, charToFind);
 }
 
-void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize) {
+void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize, glm::vec4 color) {
     for (int i = 0; i < text.length(); i++)
     {
         Character currCharacter;
@@ -34,14 +34,20 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize
         float x = xPos + (currCharacter.bearing.x * fontSize);
         float y = yPos - (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
 
-        currCharacter.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
+        currCharacter.renderable->model = glm::scale(
+            glm::mat4(1.0f),
+            glm::vec3(fontSize, fontSize, 0)
+        );
+        currCharacter.renderable->model = glm::translate(currCharacter.renderable->model, glm::vec3(x, y, 0));
+        
         currCharacter.renderable->mvp = currCharacter.renderable->proj * currCharacter.renderable->view * currCharacter.renderable->model;
-
+        currCharacter.renderable->shader->SetUniform4f("u_Color", color[0], color[1], color[2], color[3]);
+        
         currCharacter.texture->Bind();
 
         Renderer::Draw(currCharacter.renderable);
 
-        xPos += (currCharacter.advance >> 6) * fontSize;
+        xPos += (currCharacter.advance >> 6);
     }
 }
 
@@ -51,11 +57,11 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float scal
         new Texture((*fontFace)->glyph->bitmap.buffer, (*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
         glm::ivec2((*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
         glm::ivec2((*fontFace)->glyph->bitmap_left, (*fontFace)->glyph->bitmap_top),
-        (*fontFace)->glyph->advance.x * scale
+        (*fontFace)->glyph->advance.x
     };
 
-    float w = characterToReturn.size.x * scale;
-    float h = characterToReturn.size.y * scale;
+    float w = characterToReturn.size.x;
+    float h = characterToReturn.size.y;
 
     // update VBO for each character
     float vertices[16] = {

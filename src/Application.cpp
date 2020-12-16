@@ -81,7 +81,7 @@ int main()
     }
     
     error = FT_New_Face(library,
-        "C:/Windows/Fonts/Arial.ttf",
+        "C:/Windows/Fonts/AGENCYR.ttf",
         0,
         &fontFace);
 
@@ -101,6 +101,12 @@ int main()
     );
     #pragma endregion
 
+    //Getting the size of the window to allow for screen wrapping
+    int windowWidth;
+    int windowHeight;
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+    #pragma region Game Logic Intializations
     int levelNum = 1;
     Controller::currWindow = window;
 
@@ -120,6 +126,7 @@ int main()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    #pragma endregion
 
     while (!glfwWindowShouldClose(window) && s_GameState != -1)
     {
@@ -136,7 +143,9 @@ int main()
             {
                 s_GameState = 1;
             }
-            text->DrawText(0, 0, "Hello", 1);
+
+            text->DrawText(325, 400, "Asteroids!", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(1350, 250, "Press Enter to start", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             break;
         #pragma endregion
@@ -185,6 +194,8 @@ int main()
 
         case 2:
         #pragma region GameOverState
+            text->DrawText(325, 400, "Game Over!", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
             if (glfwGetKey(window, GLFW_KEY_ENTER))
             {
                 s_GameState = 0;
@@ -220,8 +231,7 @@ int main()
 
         GLCall(glfwPollEvents());
 
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE))
-        {
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE)){
             s_GameState = -1;
         }
     }
@@ -231,6 +241,8 @@ int main()
         delete player;
     }
     
+    FT_Done_Face(fontFace);
+    FT_Done_FreeType(library);
     glfwTerminate();
     return 0;
 }
