@@ -28,7 +28,7 @@ public:
 
 	void DrawText(int xPos, int yPos, std::string text, float fontSize);
 
-	Character LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale);
+	Character LoadCharacterIntoMemory(char characterToLoad, float scale);
 	
 private:
 	FT_Face* fontFace;

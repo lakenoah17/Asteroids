@@ -34,6 +34,7 @@ struct Renderable {
 
     void BindRenderable() {
         vao->Bind();
+        shader->Bind();
     }
 
     ~Renderable() {

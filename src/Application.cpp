@@ -94,12 +94,11 @@ int main()
         std::cout << "Font broken or can't be read" << std::endl;
     }
 
-    error = FT_Set_Char_Size(
-        fontFace,    /* handle to face object           */
-        0,       /* char_width in 1/64th of points  */
-        16 * 64,   /* char_height in 1/64th of points */
-        300,     /* horizontal device resolution    */
-        300);   /* vertical device resolution      */
+    error = FT_Set_Pixel_Sizes(
+        fontFace,
+        0,
+        128
+    );
     #pragma endregion
 
     int levelNum = 1;
@@ -126,8 +125,6 @@ int main()
     {
         Renderer::Clear();
         
-
-        //text->DrawText(0, 0, "Hello", .5);
         switch (s_GameState)
         {
         case -1:
@@ -139,6 +136,7 @@ int main()
             {
                 s_GameState = 1;
             }
+            text->DrawText(0, 0, "Hello", 1);
 
             break;
         #pragma endregion

@@ -18,7 +18,7 @@ void main()
 #shader fragment
 #version 330 core
 
-layout(location = 0) out vec4 color;
+layout(location = 0) out vec4 textColor;
 
 in vec2 v_TexCoord;
 
@@ -28,5 +28,5 @@ uniform sampler2D u_Texture;
 void main()
 {
     vec4 texColor = texture(u_Texture, v_TexCoord);
-    color = u_Color * texColor;
+    textColor = u_Color * texColor;
 }

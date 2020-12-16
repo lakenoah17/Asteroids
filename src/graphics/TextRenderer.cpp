@@ -25,13 +25,13 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize
         {
             FT_Render_Glyph((*fontFace)->glyph, FT_RENDER_MODE_NORMAL);
 
-            currCharacter = LoadCharacterIntoMemory(text[i], xPos, yPos, fontSize);
+            currCharacter = LoadCharacterIntoMemory(text[i], fontSize);
         }
         else {
             currCharacter = characterCache[text[i]];
         }
 
-        float x = xPos + currCharacter.bearing.x * fontSize;
+        float x = xPos + (currCharacter.bearing.x * fontSize);
         float y = yPos - (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
 
         currCharacter.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
@@ -41,19 +41,17 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize
 
         Renderer::Draw(currCharacter.renderable);
 
-        currCharacter.texture->UnBind();
-
-        xPos += (currCharacter.advance>>6) * fontSize;
+        xPos += (currCharacter.advance >> 6) * fontSize;
     }
 }
 
-Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos, float yPos, float scale) {
-    // now store character for later use9
+Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float scale) {
+    // now store character for later use
     Character characterToReturn = {
         new Texture((*fontFace)->glyph->bitmap.buffer, (*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
         glm::ivec2((*fontFace)->glyph->bitmap.width, (*fontFace)->glyph->bitmap.rows),
         glm::ivec2((*fontFace)->glyph->bitmap_left, (*fontFace)->glyph->bitmap_top),
-        (*fontFace)->glyph->advance.x
+        (*fontFace)->glyph->advance.x * scale
     };
 
     float w = characterToReturn.size.x * scale;
@@ -61,10 +59,10 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad, float xPos
 
     // update VBO for each character
     float vertices[16] = {
-        xPos,     yPos + h,   0.0f, 0.0f,
-        xPos,     yPos,       0.0f, 1.0f,
-        xPos + w, yPos,       1.0f, 1.0f,
-        xPos + w, yPos + h,   1.0f, 0.0f,
+        0, h,   0.0f, 0.0f,
+        0, 0,   0.0f, 1.0f,
+        w, 0,   1.0f, 1.0f,
+        w, h,   1.0f, 0.0f,
     };
 
     unsigned int* indicies = new unsigned int[6]{
