@@ -12,6 +12,9 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
+/// <summary>
+/// Struct containing all character data necessary to render a letter to the screen
+/// </summary>
 struct Character {
 	Texture* texture;
 	glm::ivec2 size;
@@ -28,12 +31,10 @@ public:
 
 	void DrawText(int xPos, int yPos, std::string text, float fontSize, glm::vec4 color);
 
-	Character LoadCharacterIntoMemory(char characterToLoad, float scale);
+	Character LoadCharacterIntoMemory(char characterToLoad);
 	
 private:
 	FT_Face* fontFace;
-
-	unsigned int GetCharIndex(char charToFind);
 
 	static std::map<char, Character> characterCache;
 };

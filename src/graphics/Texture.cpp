@@ -27,6 +27,12 @@ Texture::Texture(const std::string& path)
 	}
 }
 
+/// <summary>
+/// Initializes a Texture when given a data buffer alongside the width and height of the Texture
+/// </summary>
+/// <param name="bitmapBuffer">Pointer to the data buffer</param>
+/// <param name="width">Width of the texture</param>
+/// <param name="height">height of the texture</param>
 Texture::Texture(unsigned char* bitmapBuffer, int width, int height) 
 	: m_RendererID(0), m_FilePath(""), m_LocalBuffer(bitmapBuffer), m_Width(width), m_Height(height), m_BPP(0)
 {
@@ -38,6 +44,7 @@ Texture::Texture(unsigned char* bitmapBuffer, int width, int height)
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
+	//Note uses GL_RED for internal format and format
 	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, m_Width, m_Height, 0, GL_RED, GL_UNSIGNED_BYTE, m_LocalBuffer));
 }
 

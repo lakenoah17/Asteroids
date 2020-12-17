@@ -58,24 +58,26 @@ void Controller::Update(float deltaTime)
 			acceleration = glm::vec2(0.0f);
 		}
 
-		//These conditions apply a "friction" to the object. They decide which way is 
-		//opposite to the direction of motion and slow the object down over time
-		if (velocity.y > 0)
-		{
-			acceleration.y -= frictionMagnitude * deltaTime;
-		}
-		if (velocity.x > 0)
-		{
-			acceleration.x -= frictionMagnitude * deltaTime;
-		}
+		if (glm::length(velocity) >= 0.01f || glm::length(velocity) <= -0.01f) {
+			//These conditions apply a "friction" to the object. They decide which way is 
+			//opposite to the direction of motion and slow the object down over time
+			if (velocity.y > 0)
+			{
+				acceleration.y -= frictionMagnitude * deltaTime;
+			}
+			if (velocity.x > 0)
+			{
+				acceleration.x -= frictionMagnitude * deltaTime;
+			}
 
-		if (velocity.y < 0)
-		{
-			acceleration.y += frictionMagnitude * deltaTime;
-		}
-		if (velocity.x < 0)
-		{
-			acceleration.x += frictionMagnitude * deltaTime;
+			if (velocity.y < 0)
+			{
+				acceleration.y += frictionMagnitude * deltaTime;
+			}
+			if (velocity.x < 0)
+			{
+				acceleration.x += frictionMagnitude * deltaTime;
+			}
 		}
 	}
 
