@@ -2,8 +2,13 @@
 
 Player::Player()
 {
+	//Getting the size of the window to allow for screen wrapping
+	int windowWidth;
+	int windowHeight;
+	glfwGetWindowSize(Controller::currWindow, &windowWidth, &windowHeight);
+
 	//Creates Collider and initializes position of GameObject from the values passed in
-	position = new glm::vec2(120, 120);
+	position = new glm::vec2(windowWidth/2, windowHeight/2);
 	collider = new Collider(position->x - 12.5, position->y + 12.5, 25, 25);
 
 	//Initializes the verticies relative to the position in world space
