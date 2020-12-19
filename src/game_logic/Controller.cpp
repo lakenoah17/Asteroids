@@ -84,6 +84,24 @@ void Controller::Update(float deltaTime)
 	velocity += acceleration;
 	*parentPosition += velocity;
 
+	if (glfwGetKey(currWindow, GLFW_KEY_F) && !hyperSpaceCooldown)
+	{
+		(*parentPosition).x += 75 * cos(*parentRotation);
+		(*parentPosition).y += 75 * sin(*parentRotation);
+
+		hyperSpaceCooldown = 5.0f;
+	}
+	
+	if (hyperSpaceCooldown > 0)
+	{
+		hyperSpaceCooldown -= deltaTime;
+
+		if (hyperSpaceCooldown < 0)
+		{
+			hyperSpaceCooldown = 0;
+		}
+	}
+
 	#pragma endregion
 
 	#pragma region Screen Wrapping

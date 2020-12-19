@@ -29,4 +29,6 @@ private:
 
 	//Used to decide the first frame the space key is pressed
 	bool firstSpaceFrame = false;
+	bool firstFrameF = false;
+	float hyperSpaceCooldown = 0.0f;
 };
