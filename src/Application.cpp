@@ -30,6 +30,7 @@
 //0 = Menu state
 //1 = Game state
 //2 = Game Over state
+//3 = Info state
 static int s_GameState = 0;
 
 GLFWwindow* Controller::currWindow;
@@ -147,6 +148,10 @@ int main()
             {
                 s_GameState = 1;
             }
+            if (glfwGetKey(window, GLFW_KEY_I))
+            {
+                s_GameState = 3;
+            }
 
             text->DrawText(325, 400, "Asteroids!", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
             text->DrawText(1350, 250, "Press Enter to start", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -259,6 +264,11 @@ int main()
                 score = 0;
             }
             break;
+        #pragma endregion
+
+        case 3:
+        #pragma region Info State
+            text->DrawText(350, 10, "Controls:", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
         #pragma endregion
 
         default:
