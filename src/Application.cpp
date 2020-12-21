@@ -126,6 +126,8 @@ int main()
     float deltaTime = 0.0f;
     float newTime;
 
+    bool firstEnterFrame = false;
+
     TextRenderer* text = new TextRenderer(&fontFace);
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -144,10 +146,15 @@ int main()
 
         case 0:
         #pragma region MenuState
-            if (glfwGetKey(window, GLFW_KEY_ENTER))
+            if (glfwGetKey(window, GLFW_KEY_ENTER) && !firstEnterFrame)
             {
                 s_GameState = 1;
             }
+            else if (!glfwGetKey(window, GLFW_KEY_ENTER))
+            {
+                firstEnterFrame = false;
+            }
+
             if (glfwGetKey(window, GLFW_KEY_I))
             {
                 s_GameState = 3;
@@ -155,6 +162,7 @@ int main()
 
             text->DrawText(325, 400, "Asteroids!", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
             text->DrawText(1350, 250, "Press Enter to start", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(1365, 100, "Press i for controls", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             break;
         #pragma endregion
@@ -262,13 +270,28 @@ int main()
                 deltaTime = 0.0f;
 
                 score = 0;
+
+                firstEnterFrame = true;
             }
             break;
         #pragma endregion
 
         case 3:
         #pragma region Info State
-            text->DrawText(350, 10, "Controls:", 1, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(510, windowHeight + 150, "Controls:", .75, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+            text->DrawText(100, 1000, "- Press W to move forward", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 800, "- Press A to turn left", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 600, "- Press D to turn right", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 400, "- Press Space to fire a projectile", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+            text->DrawText(1350, 250, "Press Enter to return", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+            if (glfwGetKey(window, GLFW_KEY_ENTER))
+            {
+                s_GameState = 0;
+                firstEnterFrame = true;
+            }
         #pragma endregion
 
         default:

@@ -45,7 +45,7 @@ void TextRenderer::DrawText(int xPos, int yPos, std::string text, float fontSize
 
         //x and pos position of the character adjusted to follow bearingas and a baseline
         float x = xPos + (currCharacter.bearing.x * fontSize);
-        float y = yPos - (currCharacter.size.y - currCharacter.bearing.y) * fontSize;
+        float y = yPos - (currCharacter.size.y - currCharacter.bearing.y);
 
         currCharacter.renderable->model = glm::scale(
             glm::mat4(1.0f),
