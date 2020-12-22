@@ -8,6 +8,7 @@ class Controller
 {
 public:
 	static GLFWwindow* currWindow;
+	static float hyperSpaceCooldown;
 
 	Controller(glm::vec2* position, glm::vec4 colliderRect, float& rotation);
 	~Controller();
@@ -30,5 +31,4 @@ private:
 	//Used to decide the first frame the space key is pressed
 	bool firstSpaceFrame = false;
 	bool firstFrameF = false;
-	float hyperSpaceCooldown = 0.0f;
 };

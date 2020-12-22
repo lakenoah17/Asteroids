@@ -1,6 +1,8 @@
 #include "Controller.h"
 #include <iostream>
 
+float Controller::hyperSpaceCooldown;
+
 /// <summary>
 /// Constructs a Controller
 /// </summary>
@@ -12,6 +14,7 @@ Controller::Controller(glm::vec2* position, glm::vec4 colliderRect, float& rotat
 {
 	velocity = glm::vec2(0, 0);
 	acceleration = glm::vec2(0, 0);
+	hyperSpaceCooldown = 0.0f;
 }
 
 Controller::~Controller()

@@ -24,8 +24,6 @@
 
 #include "graphics/TextRenderer.h"
 
-#include <thread>
-
 //-1 = Stop execution
 //0 = Menu state
 //1 = Game state
@@ -191,6 +189,7 @@ int main()
             }
             
             text->DrawText(25, windowHeight * 4 - 125, "Score: " + std::to_string(score), .25, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(windowWidth * 4 - 1250, windowHeight * 4 - 115, "Hyper Space Cooldown: " + std::to_string(Controller::hyperSpaceCooldown).substr(0,4) + "s", .25, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             if (player)
             {
@@ -278,14 +277,15 @@ int main()
 
         case 3:
         #pragma region Info State
-            text->DrawText(510, windowHeight + 150, "Controls:", .75, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(510, windowHeight + 100, "Controls:", .75, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-            text->DrawText(100, 1000, "- Press W to move forward", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            text->DrawText(100, 800, "- Press A to turn left", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            text->DrawText(100, 600, "- Press D to turn right", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-            text->DrawText(100, 400, "- Press Space to fire a projectile", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 1100, "- Press W to move forward", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 900, "- Press A to turn left", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 700, "- Press D to turn right", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 500, "- Press Space to fire a projectile", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(100, 300, "- Press F to Hyper Space Jump", .5, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-            text->DrawText(1350, 250, "Press Enter to return", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+            text->DrawText(1350, 100, "Press Enter to return", .3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             if (glfwGetKey(window, GLFW_KEY_ENTER))
             {
