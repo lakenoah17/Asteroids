@@ -200,7 +200,7 @@ int main()
             {
                 numLives--;
 
-                if (numLives == -1)
+                if (numLives <= -1)
                 {
                     s_GameState = 2;
                 }
@@ -249,6 +249,8 @@ int main()
                 s_GameState = 0;
 
                 levelNum = 1;
+                numLives = 3;
+
                 Controller::currWindow = window;
 
                 delete projManager;

@@ -16,6 +16,13 @@ ProjectileManager::ProjectileManager(GLFWwindow* currWindow)
 
 ProjectileManager::~ProjectileManager()
 {
+	for (Projectile* proj : s_ActiveProjectiles)
+	{
+		if (proj)
+		{
+			delete proj;
+		}
+	}
 }
 
 /// <summary>
@@ -67,7 +74,7 @@ void ProjectileManager::UpdateProjectiles(float deltaTime)
 			if (!CheckProjectileStatus(s_ActiveProjectiles[i], screenWidth, screenHeight))
 			{
 				delete s_ActiveProjectiles[i];
-				s_ActiveProjectiles[i] = NULL;
+				s_ActiveProjectiles[i] = nullptr;
 
 				for (int j = i + 1; j < s_NumOfProjectiles + i + 1 && j < MAX_NUMBER_OF_PROJECTILES; j++) {
 					ShiftProjectile(j);

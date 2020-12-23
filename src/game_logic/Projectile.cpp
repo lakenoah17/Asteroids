@@ -19,7 +19,6 @@ Projectile::Projectile(float x, float y, float width, float height, float angleT
 /// </summary>
 Projectile::~Projectile()
 {
-	
 }
 
 /// <summary>
