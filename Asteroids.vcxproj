@@ -72,9 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>$(SolutionDir)Dependencies\GL\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>Dependencies;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\GL\lib$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Z_DELETE\</OutDir>
+    <IntDir>$(SolutionDir)Z_DELETE\$(ProjectName)\$(Configuration)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <ExecutablePath>$(SolutionDir)Dependencies\GL\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>Dependencies;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\GL\lib$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Z_DELETE\</OutDir>
+    <IntDir>$(SolutionDir)Z_DELETE\$(ProjectName)\$(Configuration)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -88,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solution Dir)src\vendor;$(Solution Dir)Dependencies\GLEW\include;$(Solution Dir)Dependencies\FreeType\include;$(Solution Dir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies;$(Solution Dir)src\vendor;$(Solution Dir)Dependencies\GLEW\include;$(Solution Dir)Dependencies\FreeType\include;$(Solution Dir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -96,6 +106,11 @@
       <AdditionalDependencies>freetype.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Dependencies\FreeType\release static\win32;$(SolutionDir)Dependencies\GLFW\lib-vc2019</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(SolutionDir)_Binary\"
+copy "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)_Binary"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -105,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solution Dir)src\vendor;$(Solution Dir)Dependencies\GLEW\include;$(Solution Dir)Dependencies\FreeType\include;$(Solution Dir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies;$(Solution Dir)src\vendor;$(Solution Dir)Dependencies\GLEW\include;$(Solution Dir)Dependencies\FreeType\include;$(Solution Dir)Dependencies\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,6 +130,11 @@
       <AdditionalDependencies>freetype.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;glew32s.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLEW\lib\Release\Win32;$(SolutionDir)Dependencies\FreeType\release static\win32;$(SolutionDir)Dependencies\GLFW\lib-vc2019</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(SolutionDir)_Binary\"
+copy "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)_Binary"
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

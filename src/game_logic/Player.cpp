@@ -32,7 +32,7 @@ Player::Player()
 
 	pm = new ProjectileManager(Controller::currWindow);
 
-	renderData = Renderer::CreateRenderable("res/shaders/Spaceship.shader", verticies, 16, 4, indicies, 8);
+	renderData = Renderer::CreateRenderable("../res/shaders/Spaceship.shader", verticies, 16, 4, indicies, 8);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));

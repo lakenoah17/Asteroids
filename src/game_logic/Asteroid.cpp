@@ -42,7 +42,7 @@ Asteroid::Asteroid()
 	rotation = 45;
 	velocity = 10.0f * glm::vec2(cos(rotation), sin(rotation));
 
-	renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+	renderData = Renderer::CreateRenderable("../res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 
 	//Updates the MVP matrix for rendering to match the members of the GameObject
 	renderData->model = glm::translate(glm::mat4(1.0f), glm::vec3(position->x, position->y, 0));
@@ -111,7 +111,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 			5, 0
 		};
 
-		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 24, 4, indicies, 12);
+		renderData = Renderer::CreateRenderable("../res/shaders/EmptyGameObject.shader", verticies, 24, 4, indicies, 12);
 		break;
 	case AsteroidSize::MEDIUM:
 		//Creates Collider and initializes position of GameObject from the values passed in
@@ -159,7 +159,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 			7, 0
 		};
 
-		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 32, 4, indicies, 16);
+		renderData = Renderer::CreateRenderable("../res/shaders/EmptyGameObject.shader", verticies, 32, 4, indicies, 16);
 		break;
 	case AsteroidSize::LARGE:
 		//Creates Collider and initializes position of GameObject from the values passed in
@@ -213,7 +213,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 			9, 0
 		};
 
-		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+		renderData = Renderer::CreateRenderable("../res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 		break;
 	//Currently not fully implemented
 	case AsteroidSize::XLARGE:
@@ -264,7 +264,7 @@ Asteroid::Asteroid(glm::vec2* thisPosition, glm::vec2 velocity, AsteroidSize siz
 			9, 0
 		};
 
-		renderData = Renderer::CreateRenderable("res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
+		renderData = Renderer::CreateRenderable("../res/shaders/EmptyGameObject.shader", verticies, 40, 4, indicies, 20);
 		break;
 	default:
 		break;

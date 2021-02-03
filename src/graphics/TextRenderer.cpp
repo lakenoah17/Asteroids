@@ -96,7 +96,7 @@ Character TextRenderer::LoadCharacterIntoMemory(char characterToLoad) {
         2, 3, 0
     };
 
-    characterToReturn.renderable = Renderer::CreateRenderable("res/shaders/Text.shader", vertices, 16, 4, indicies, 6);
+    characterToReturn.renderable = Renderer::CreateRenderable("../res/shaders/Text.shader", vertices, 16, 4, indicies, 6);
 
     characterToReturn.renderable->model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
     characterToReturn.renderable->mvp = characterToReturn.renderable->proj * characterToReturn.renderable->view * characterToReturn.renderable->model;
